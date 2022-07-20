@@ -17,28 +17,28 @@ export default function () {
             <strong>Edit</strong>
 
             <fieldset>
-              <label>
-                <input type="checkbox" id="twaClasses2xl" checked />
+              <input type="checkbox" id="twaClasses2xl" checked />
+              <label for="twaClasses2xl">
                 <span>2xl</span>
               </label>
 
-              <label>
-                <input type="checkbox" id="twaClassesXl" checked />
+              <input type="checkbox" id="twaClassesXl" checked />
+              <label for="twaClassesXl">
                 <span>xl</span>
               </label>
 
-              <label>
-                <input type="checkbox" id="twaClassesLg" checked />
+              <input type="checkbox" id="twaClassesLg" checked />
+              <label for="twaClassesLg">
                 <span>lg</span>
               </label>
 
-              <label>
-                <input type="checkbox" id="twaClassesMd" checked />
+              <input type="checkbox" id="twaClassesMd" checked />
+              <label for="twaClassesMd">
                 <span>md</span>
               </label>
 
-              <label>
-                <input type="checkbox" id="twaClassesSm" checked />
+              <input type="checkbox" id="twaClassesSm" checked />
+              <label for="twaClassesSm">
                 <span>sm</span>
               </label>
             </fieldset>
@@ -128,12 +128,28 @@ export default function () {
         font-weight: 500;
       }
 
-      .twaPopup label input {
-        display: none;
+      .twaPopup label:hover {
+        outline: 2px solid rgb(129 140 248);
       }
 
-      .twaPopup label input:checked + span {
+      .twaPopup input[type="checkbox"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      .twaPopup input:checked + label {
         color: rgb(129 140 248);
+      }
+
+      .twaPopup input:focus + label {
+        outline: 2px solid rgb(129 140 248);
       }
 
       .twaPopup textarea {
@@ -146,6 +162,10 @@ export default function () {
         resize: none;
       }
 
+      .twaPopup textarea:focus {
+        outline: 2px solid rgb(129 140 248);
+      }
+
       .twaPopup button {
         width: 100%;
         background: rgb(99 102 241);
@@ -154,6 +174,10 @@ export default function () {
         font-size: 0.75rem;
         color: rgb(255 255 255);
         margin-top: 0.25rem;
+      }
+
+      .twaPopup button:hover, .twaPopup button:focus {
+        outline: 2px solid rgb(129 140 248);
       }
 
       .twaPopupWrapper > div {
