@@ -1,5 +1,8 @@
 # Tailwind CSS Assistant
 
+
+https://user-images.githubusercontent.com/50486078/180165763-c77a0ecf-e179-4a89-a8f0-5c1894de0fcb.mov
+
 ✅ Small JavaScript package that helps you work with Tailwind CSS by...
 
 - Showing you the class names of the current element
