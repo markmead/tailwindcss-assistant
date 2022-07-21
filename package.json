@@ -1,21 +1,17 @@
 {
   "name": "tailwindcss-assistant",
   "version": "1.0.0",
-  "description": "✅ Alpine JS plugin that prevents your form getting unwanted submissions through the use of an image puzzle",
+  "description": "Small package that helps you develop projects with Tailwind CSS",
   "keywords": [
-    "Alpine",
-    "Alpine JS",
-    "Alpine JS Plugins",
-    "Alpine JS Form Validator",
-    "Alpine JS Form Validation",
-    "Alpine JS Form Captcha",
-    "Captcha"
+    "Tailwind CSS",
+    "Tailwind CSS Helper",
+    "Tailwind CSS Assistant"
   ],
   "author": "Mark Mead",
   "license": "MIT",
-  "main": "dist/captcha.cjs.js",
-  "module": "dist/captcha.esm.js",
-  "unpkg": "dist/captcha.min.js",
+  "main": "dist/assistant.cjs.js",
+  "module": "dist/assistant.esm.js",
+  "unpkg": "dist/assistant.min.js",
   "scripts": {
     "build": "node scripts/build.js"
   },

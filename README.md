@@ -3,6 +3,7 @@
 ✅ Small JavaScript package that helps you work with Tailwind CSS by...
 
 - Showing you the class names of the current element
+- Showing you the current breakpoint
 - Allowing you to toggle breakpoint classes
 - Allowing you to add new classes, including classes created using JIT
 
