@@ -1,14 +1,5 @@
-export default function (Alpine) {
-  Alpine.directive('tailwind-assistant', (el, {}, {}) => {
-    let setElementStyle = (targetElement, targetElementStyle) => {
-      targetElement.setAttribute(
-        'style',
-        Object.entries(targetElementStyle)
-          .map(([key, value]) => `${key}: ${value}`)
-          .join(';')
-      )
-    }
-
+export default function () {
+  document.addEventListener('DOMContentLoaded', () => {
     let getActiveBreakpoint = () => {
       let windowWidth = window.innerWidth
 
@@ -27,123 +18,205 @@ export default function (Alpine) {
       return tailwindBreakpoints[activeBreakpoint] || 'Default'
     }
 
+    let scriptElement = document.createElement('script')
+
+    scriptElement.setAttribute(
+      'src',
+      'https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp'
+    )
+
+    document.head.appendChild(scriptElement)
+
     let popupWrapper = document.createElement('div')
 
-    let classNamePopup = document.createElement('div')
+    popupWrapper.innerHTML = `
+      <details id="twaPopup" class="fixed right-4 bottom-4 bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
+        <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+          </svg>
 
-    let breakpointPopup = document.createElement('div')
+          <span class="group-open:block hidden text-white text-sm font-medium">
+            - Tailwind CSS Assistant
+          </span>
+        </summary>
 
-    let popupStyle = {
-      padding: '8px',
-      background: '#000',
-      color: '#FFF',
-      'font-size': '12px',
-    }
+        <div class="p-4 space-y-6">
+          <p class="text-center text-xs text-slate-400">
+            Open element CSS information with <span class="font-medium">CMD + Click</span>.
+          </p>
 
-    setElementStyle(classNamePopup, popupStyle)
+          <div>
+            <strong class="text-slate-400 font-medium text-sm">
+              Breakpoint: <span id="twaBreakpoint"></span>
+            </strong>
+          </div>
 
-    setElementStyle(breakpointPopup, popupStyle)
+          <div>
+            <strong class="text-slate-400 font-medium text-sm">
+              Classes
+            </strong>
 
-    setElementStyle(popupWrapper, {
-      position: 'fixed',
-      bottom: '16px',
-      right: '16px',
-      display: 'flex',
-      gap: '8px',
-    })
+            <pre id="twaClasses" class="whitespace-pre-wrap font-mono p-2 bg-slate-800 rounded-md text-slate-500 text-sm mt-1"></pre>
+          </div>
 
-    classNamePopup.setAttribute('hidden', true)
+          <div>
+            <fieldset>
+              <legend class="text-slate-400 font-medium text-sm">
+                Edit
+              </legend>
 
-    popupWrapper.appendChild(classNamePopup)
+              <div class="flex flex-wrap gap-1 mt-1">
+                <div>
+                  <input type="checkbox" id="twaClasses2xl" name="2xl" checked class="sr-only" />
 
-    popupWrapper.appendChild(breakpointPopup)
+                  <label
+                    for="twaClasses2xl"
+                    class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                  >
+                    2xl
+                  </label>
+                </div>
 
-    el.appendChild(popupWrapper)
+              <div>
+                <input type="checkbox" id="twaClassesXl" name="xl" checked class="sr-only" />
 
-    let setBreakpointText = () => {
-      return `${window.innerWidth}px - ${getActiveBreakpoint()}`
-    }
+                <label
+                  for="twaClassesXl"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  xl
+                </label>
+              </div>
 
-    breakpointPopup.innerText = setBreakpointText()
+              <div>
+                <input type="checkbox" id="twaClassesLg" name="lg" checked class="sr-only" />
 
-    window.addEventListener('resize', function () {
-      breakpointPopup.innerText = setBreakpointText()
-    })
+                <label
+                  for="twaClassesLg"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  lg
+                </label>
+              </div>
 
-    document.addEventListener('mouseover', function (event) {
-      let currentTarget = event.target
+              <div>
+                <input type="checkbox" id="twaClassesMd" name="md" checked class="sr-only" />
 
-      if (!currentTarget.className) {
-        classNamePopup.setAttribute('hidden', true)
+                <label
+                  for="twaClassesMd"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  md
+                </label>
+              </div>
 
-        return
+              <div>
+                <input type="checkbox" id="twaClassesSm" name="sm" checked class="sr-only" />
+
+                <label
+                  for="twaClassesSm"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  sm
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div>
+            <form id="twaClassesAdd">
+              <label for="twaClassesEditor" class="text-slate-400 font-medium text-sm">
+                Add
+              </label>
+
+              <textarea id="twaClassesEditor" rows="4" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm"></textarea>
+
+              <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full">
+                Update
+              </button>
+            </form>
+          </div>
+        </div>
+      </details>
+    `
+
+    document.body.appendChild(popupWrapper)
+
+    let twaBreakpoint = document.getElementById('twaBreakpoint')
+
+    let twaClasses = document.getElementById('twaClasses')
+
+    let twaBreakpointInputs = [
+      ...document.querySelectorAll('input[type="checkbox"]'),
+    ]
+
+    let twaClassesAdd = document.getElementById('twaClassesAdd')
+
+    let twaClassesEditor = document.getElementById('twaClassesEditor')
+
+    document.addEventListener('click', (event) => {
+      if (event.metaKey) {
+        twaPopup.open = true
+
+        let currentTarget = event.target
+
+        twaBreakpoint.innerText = getActiveBreakpoint()
+
+        twaClasses.innerText = currentTarget.className
+
+        twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
+
+        twaClassesEditor.value = currentTarget.className
+
+        let twaBreakpointClasses = getBreakpointClasses(currentTarget)
+
+        twaBreakpointInputs.forEach((twaInput) => {
+          twaInput.addEventListener('input', () => {
+            twaBreakpointClasses[twaInput.name].forEach((twClass) =>
+              currentTarget.classList.toggle(twClass)
+            )
+
+            twaClasses.innerText = currentTarget.className
+
+            twaClassesEditor.value = currentTarget.className
+          })
+        })
+
+        twaClassesAdd.addEventListener('submit', (event) => {
+          event.preventDefault()
+
+          currentTarget.className = twaClassesEditor.value
+
+          twaBreakpointClasses = getBreakpointClasses(currentTarget)
+        })
       }
+    })
 
-      classNamePopup.removeAttribute('hidden')
-
-      classNamePopup.innerText = currentTarget.className
-
-      let twoXlBreakpointClasses = [...currentTarget.classList].filter(
-        (className) => className.startsWith('2xl:')
-      )
-
-      let xlBreakpointClasses = [...currentTarget.classList].filter(
-        (className) => className.startsWith('xl:')
-      )
-
-      let lgBreakpointClasses = [...currentTarget.classList].filter(
-        (className) => className.startsWith('lg:')
-      )
-
-      let mdBreakpointClasses = [...currentTarget.classList].filter(
-        (className) => className.startsWith('md:')
-      )
-
-      let smBreakpointClasses = [...currentTarget.classList].filter(
-        (className) => className.startsWith('sm:')
-      )
-
-      document.addEventListener('keydown', function (event) {
-        if (event.shiftKey && event.key === 'H') {
-          twoXlBreakpointClasses.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classNamePopup.innerText = currentTarget.className
-        }
-
-        if (event.shiftKey && event.key === 'X') {
-          xlBreakpointClasses.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classNamePopup.innerText = currentTarget.className
-        }
-
-        if (event.shiftKey && event.key === 'L') {
-          lgBreakpointClasses.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classNamePopup.innerText = currentTarget.className
-        }
-
-        if (event.shiftKey && event.key === 'M') {
-          mdBreakpointClasses.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classNamePopup.innerText = currentTarget.className
-        }
-
-        if (event.shiftKey && event.key === 'S') {
-          smBreakpointClasses.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classNamePopup.innerText = currentTarget.className
-        }
-      })
+    window.addEventListener('resize', () => {
+      twaBreakpoint.innerText = getActiveBreakpoint()
     })
   })
+
+  let getBreakpointClasses = (twElement) => {
+    return {
+      '2xl': [...twElement.classList].filter((className) =>
+        className.startsWith('2xl:')
+      ),
+      xl: [...twElement.classList].filter((className) =>
+        className.startsWith('xl:')
+      ),
+      lg: [...twElement.classList].filter((className) =>
+        className.startsWith('lg:')
+      ),
+      md: [...twElement.classList].filter((className) =>
+        className.startsWith('md:')
+      ),
+      sm: [...twElement.classList].filter((className) =>
+        className.startsWith('sm:')
+      ),
+    }
+  }
 }

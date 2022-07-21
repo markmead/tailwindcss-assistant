@@ -1,6 +1,6 @@
 {
-  "name": "alpinejs-form-captcha",
-  "version": "1.0.1",
+  "name": "tailwindcss-assistant",
+  "version": "1.0.0",
   "description": "✅ Alpine JS plugin that prevents your form getting unwanted submissions through the use of an image puzzle",
   "keywords": [
     "Alpine",
