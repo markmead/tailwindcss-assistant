@@ -1,433 +1,222 @@
 export default function () {
   document.addEventListener('DOMContentLoaded', () => {
+    let getActiveBreakpoint = () => {
+      let windowWidth = window.innerWidth
+
+      let tailwindBreakpoints = {
+        640: 'SM',
+        768: 'MD',
+        1024: 'LG',
+        1280: 'XL',
+        1536: '2XL',
+      }
+
+      let activeBreakpoint = Object.keys(tailwindBreakpoints)
+        .filter((breakpointWidth) => breakpointWidth < windowWidth)
+        .at(-1)
+
+      return tailwindBreakpoints[activeBreakpoint] || 'Default'
+    }
+
+    let scriptElement = document.createElement('script')
+
+    scriptElement.setAttribute(
+      'src',
+      'https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp'
+    )
+
+    document.head.appendChild(scriptElement)
+
     let popupWrapper = document.createElement('div')
 
     popupWrapper.innerHTML = `
-      <div class="twaPopup">
-        <div class="twaPopupEmpty">👋</div>
+      <details id="twaPopup" class="fixed right-4 bottom-4 bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
+        <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+          </svg>
 
-        <div class="twaPopupWrapper">
+          <span class="group-open:block hidden text-white text-sm font-medium">
+            - Tailwind CSS Assistant
+          </span>
+        </summary>
+
+        <div class="p-4 space-y-6">
+          <p class="text-center text-xs text-slate-400">
+            Open element CSS information with <span class="font-medium">CMD + Click</span>.
+          </p>
+
           <div>
-            <strong>Classes</strong>
-
-            <pre id="twaClasses"></pre>
+            <strong class="text-slate-400 font-medium text-sm">
+              Breakpoint: <span id="twaBreakpoint"></span>
+            </strong>
           </div>
 
           <div>
-            <strong>Edit</strong>
+            <strong class="text-slate-400 font-medium text-sm">
+              Classes
+            </strong>
 
+            <pre id="twaClasses" class="whitespace-pre-wrap font-mono p-2 bg-slate-800 rounded-md text-slate-500 text-sm mt-1"></pre>
+          </div>
+
+          <div>
             <fieldset>
-              <input type="checkbox" id="twaClasses2xl" checked />
-              <label for="twaClasses2xl">
-                <span>2xl</span>
-              </label>
+              <legend class="text-slate-400 font-medium text-sm">
+                Edit
+              </legend>
 
-              <input type="checkbox" id="twaClassesXl" checked />
-              <label for="twaClassesXl">
-                <span>xl</span>
-              </label>
+              <div class="flex flex-wrap gap-1 mt-1">
+                <div>
+                  <input type="checkbox" id="twaClasses2xl" name="2xl" checked class="sr-only" />
 
-              <input type="checkbox" id="twaClassesLg" checked />
-              <label for="twaClassesLg">
-                <span>lg</span>
-              </label>
+                  <label
+                    for="twaClasses2xl"
+                    class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                  >
+                    2xl
+                  </label>
+                </div>
 
-              <input type="checkbox" id="twaClassesMd" checked />
-              <label for="twaClassesMd">
-                <span>md</span>
-              </label>
+              <div>
+                <input type="checkbox" id="twaClassesXl" name="xl" checked class="sr-only" />
 
-              <input type="checkbox" id="twaClassesSm" checked />
-              <label for="twaClassesSm">
-                <span>sm</span>
-              </label>
+                <label
+                  for="twaClassesXl"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  xl
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" id="twaClassesLg" name="lg" checked class="sr-only" />
+
+                <label
+                  for="twaClassesLg"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  lg
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" id="twaClassesMd" name="md" checked class="sr-only" />
+
+                <label
+                  for="twaClassesMd"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  md
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" id="twaClassesSm" name="sm" checked class="sr-only" />
+
+                <label
+                  for="twaClassesSm"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  sm
+                </label>
+              </div>
             </fieldset>
           </div>
 
           <div>
-            <strong>Add</strong>
-            <textarea id="twaClassesNew" rows="4"></textarea>
-            <button id="twaClassesNewAdd">Update</button>
+            <form id="twaClassesAdd">
+              <label for="twaClassesEditor" class="text-slate-400 font-medium text-sm">
+                Add
+              </label>
+
+              <textarea id="twaClassesEditor" rows="4" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm"></textarea>
+
+              <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full">
+                Update
+              </button>
+            </form>
           </div>
         </div>
-      </div>
+      </details>
     `
 
     document.body.appendChild(popupWrapper)
 
-    let scriptElement = document.createElement('script')
+    let twaBreakpoint = document.getElementById('twaBreakpoint')
 
-    scriptElement.setAttribute('src', 'https://cdn.tailwindcss.com')
+    let twaClasses = document.getElementById('twaClasses')
 
-    let styleElement = document.createElement('style')
+    let twaBreakpointInputs = [
+      ...document.querySelectorAll('input[type="checkbox"]'),
+    ]
 
-    styleElement.innerHTML = `
-      .twaPopup {
-        position: fixed;
-        right: 1rem;
-        bottom: 1rem;
-        background: rgb(15 23 42);
-        transition: all 0.25s ease;
-      }
+    let twaClassesAdd = document.getElementById('twaClassesAdd')
 
-      .twaPopup:not(.twaPopupOpen) {
-        width: 3rem;
-        height: 3rem;
-        display: grid;
-        place-content: center;
-        border-radius: 0.25rem;
-      }
-
-      .twaPopup:not(.twaPopupOpen) > .twaPopupWrapper {
-        display: none;
-      }
-
-      .twaPopup.twaPopupOpen {
-        padding: 1rem;
-        border-radius: 0.5rem;
-        max-width: 20rem;
-      }
-
-      .twaPopup.twaPopupOpen > .twaPopupEmpty {
-        display: none;
-      }
-
-      .twaPopup strong {
-        display: block;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: rgb(203 213 225);
-        margin-bottom: 0.25rem;
-      }
-
-      .twaPopup pre {
-        white-space: pre-wrap;
-        background: rgb(30 41 59);
-        padding: 0.5rem;
-        border-radius: 0.25rem;
-        font-size: 0.75rem;
-        color: rgb(148 163 184);
-      }
-
-      .twaPopup fieldset {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-      }
-
-      .twaPopup label {
-        background: rgb(30 41 59);
-        width: 2rem;
-        height: 2rem;
-        display: grid;
-        place-content: center;
-        border-radius: 0.25rem;
-        font-size: 0.75rem;
-        color: rgb(148 163 184);
-        cursor: pointer;
-        font-weight: 500;
-      }
-
-      .twaPopup label:hover {
-        outline: 2px solid rgb(129 140 248);
-      }
-
-      .twaPopup input[type="checkbox"] {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-      }
-
-      .twaPopup input:checked + label {
-        color: rgb(129 140 248);
-      }
-
-      .twaPopup input:focus + label {
-        outline: 2px solid rgb(129 140 248);
-      }
-
-      .twaPopup textarea {
-        background: rgb(30 41 59);
-        padding: 0.5rem;
-        border-radius: 0.25rem;
-        font-size: 0.75rem;
-        color: rgb(148 163 184);
-        width: 100%;
-        resize: none;
-      }
-
-      .twaPopup textarea:focus {
-        outline: 2px solid rgb(129 140 248);
-      }
-
-      .twaPopup button {
-        width: 100%;
-        background: rgb(99 102 241);
-        padding: 0.5rem;
-        border-radius: 0.25rem;
-        font-size: 0.75rem;
-        color: rgb(255 255 255);
-        margin-top: 0.25rem;
-      }
-
-      .twaPopup button:hover, .twaPopup button:focus {
-        outline: 2px solid rgb(129 140 248);
-      }
-
-      .twaPopupWrapper > div {
-        margin-bottom: 1rem;
-      }
-    `
-
-    document.head.appendChild(scriptElement)
-
-    document.head.appendChild(styleElement)
+    let twaClassesEditor = document.getElementById('twaClassesEditor')
 
     document.addEventListener('click', (event) => {
-      let insideClick = document
-        .querySelector('.twaPopup')
-        .contains(event.target)
+      if (event.metaKey) {
+        twaPopup.open = true
 
-      if (!insideClick) {
-        document.querySelector('.twaPopup').classList.remove('twaPopupOpen')
-      }
-
-      if (event.shiftKey) {
         let currentTarget = event.target
 
-        document.querySelector('.twaPopup').classList.add('twaPopupOpen')
+        twaBreakpoint.innerText = getActiveBreakpoint()
 
-        let classesText = document.getElementById('twaClasses')
+        twaClasses.innerText = currentTarget.className
 
-        let classes2xlInput = document.getElementById('twaClasses2xl')
+        twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
 
-        let classesXlInput = document.getElementById('twaClassesXl')
+        twaClassesEditor.value = currentTarget.className
 
-        let classesLgInput = document.getElementById('twaClassesLg')
+        let twaBreakpointClasses = getBreakpointClasses(currentTarget)
 
-        let classesMdInput = document.getElementById('twaClassesMd')
+        twaBreakpointInputs.forEach((twaInput) => {
+          twaInput.addEventListener('input', () => {
+            twaBreakpointClasses[twaInput.name].forEach((twClass) =>
+              currentTarget.classList.toggle(twClass)
+            )
 
-        let classesSmInput = document.getElementById('twaClassesSm')
+            twaClasses.innerText = currentTarget.className
 
-        classes2xlInput.checked = true
-
-        classesXlInput.checked = true
-
-        classesLgInput.checked = true
-
-        classesMdInput.checked = true
-
-        classesSmInput.checked = true
-
-        let twaClassesNewInput = document.getElementById('twaClassesNew')
-
-        let classes2xl = [...currentTarget.classList].filter((className) =>
-          className.startsWith('2xl:')
-        )
-
-        let classesXl = [...currentTarget.classList].filter((className) =>
-          className.startsWith('xl:')
-        )
-
-        let classesLg = [...currentTarget.classList].filter((className) =>
-          className.startsWith('lg:')
-        )
-
-        let classesMd = [...currentTarget.classList].filter((className) =>
-          className.startsWith('md:')
-        )
-
-        let classesSm = [...currentTarget.classList].filter((className) =>
-          className.startsWith('sm:')
-        )
-
-        classesText.innerText = currentTarget.className
-
-        classes2xlInput.addEventListener('input', () => {
-          classes2xl.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classesText.innerText = currentTarget.className
+            twaClassesEditor.value = currentTarget.className
+          })
         })
 
-        classesXlInput.addEventListener('input', () => {
-          classesXl.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
+        twaClassesAdd.addEventListener('submit', (event) => {
+          event.preventDefault()
 
-          classesText.innerText = currentTarget.className
-        })
+          currentTarget.className = twaClassesEditor.value
 
-        classesLgInput.addEventListener('input', () => {
-          classesLg.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classesText.innerText = currentTarget.className
-        })
-
-        classesMdInput.addEventListener('input', () => {
-          classesMd.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classesText.innerText = currentTarget.className
-        })
-
-        classesSmInput.addEventListener('input', () => {
-          classesSm.forEach((className) =>
-            currentTarget.classList.toggle(className)
-          )
-
-          classesText.innerText = currentTarget.className
-        })
-
-        twaClassesNewInput.value = currentTarget.className
-
-        twaClassesNewAdd.addEventListener('click', () => {
-          currentTarget.className = twaClassesNewInput.value
+          twaBreakpointClasses = getBreakpointClasses(currentTarget)
         })
       }
     })
+
+    window.addEventListener('resize', () => {
+      twaBreakpoint.innerText = getActiveBreakpoint()
+    })
   })
 
-  // setElementStyle(classNamePopup, popupStyle)
-
-  // setElementStyle(breakpointPopup, popupStyle)
-
-  // setElementStyle(popupWrapper, {
-  //   position: 'fixed',
-  //   bottom: '16px',
-  //   right: '16px',
-  //   display: 'flex',
-  //   gap: '8px',
-  // })
-
-  // classNamePopup.setAttribute('hidden', true)
-
-  // popupWrapper.appendChild(classNamePopup)
-
-  // popupWrapper.appendChild(breakpointPopup)
-
-  // el.appendChild(popupWrapper)
-
-  // let setBreakpointText = () => {
-  //   return `${window.innerWidth}px - ${getActiveBreakpoint()}`
-  // }
-
-  // breakpointPopup.innerText = setBreakpointText()
-
-  // window.addEventListener('resize', function () {
-  //   breakpointPopup.innerText = setBreakpointText()
-  // })
-
-  // document.addEventListener('mouseover', function (event) {
-  //   let currentTarget = event.target
-
-  //   if (!currentTarget.className) {
-  //     classNamePopup.setAttribute('hidden', true)
-
-  //     return
-  //   }
-
-  //   classNamePopup.removeAttribute('hidden')
-
-  //   classNamePopup.innerText = currentTarget.className
-
-  //   let twoXlBreakpointClasses = [...currentTarget.classList].filter(
-  //     (className) => className.startsWith('2xl:')
-  //   )
-
-  //   let xlBreakpointClasses = [...currentTarget.classList].filter((className) =>
-  //     className.startsWith('xl:')
-  //   )
-
-  // let lgBreakpointClasses = [...currentTarget.classList].filter((className) =>
-  //   className.startsWith('lg:')
-  // )
-
-  //   let mdBreakpointClasses = [...currentTarget.classList].filter((className) =>
-  //     className.startsWith('md:')
-  //   )
-
-  //   let smBreakpointClasses = [...currentTarget.classList].filter((className) =>
-  //     className.startsWith('sm:')
-  //   )
-
-  //   document.addEventListener('keydown', function (event) {
-  //     if (event.shiftKey && event.key === 'H') {
-  //       twoXlBreakpointClasses.forEach((className) =>
-  //         currentTarget.classList.toggle(className)
-  //       )
-
-  //       classNamePopup.innerText = currentTarget.className
-  //     }
-
-  //     if (event.shiftKey && event.key === 'X') {
-  //       xlBreakpointClasses.forEach((className) =>
-  //         currentTarget.classList.toggle(className)
-  //       )
-
-  //       classNamePopup.innerText = currentTarget.className
-  //     }
-
-  //     if (event.shiftKey && event.key === 'L') {
-  // lgBreakpointClasses.forEach((className) =>
-  //   currentTarget.classList.toggle(className)
-  // )
-
-  //       classNamePopup.innerText = currentTarget.className
-  //     }
-
-  //     if (event.shiftKey && event.key === 'M') {
-  //       mdBreakpointClasses.forEach((className) =>
-  //         currentTarget.classList.toggle(className)
-  //       )
-
-  //       classNamePopup.innerText = currentTarget.className
-  //     }
-
-  //     if (event.shiftKey && event.key === 'S') {
-  //       smBreakpointClasses.forEach((className) =>
-  //         currentTarget.classList.toggle(className)
-  //       )
-
-  //       classNamePopup.innerText = currentTarget.className
-  //     }
-  //   })
-  // })
-
-  let setElementStyle = (targetElement, targetElementStyle) => {
-    targetElement.setAttribute(
-      'style',
-      Object.entries(targetElementStyle)
-        .map(([key, value]) => `${key}: ${value}`)
-        .join(';')
-    )
-  }
-
-  let getActiveBreakpoint = () => {
-    let windowWidth = window.innerWidth
-
-    let tailwindBreakpoints = {
-      640: 'SM',
-      768: 'MD',
-      1024: 'LG',
-      1280: 'XL',
-      1536: '2XL',
+  let getBreakpointClasses = (twElement) => {
+    return {
+      '2xl': [...twElement.classList].filter((className) =>
+        className.startsWith('2xl:')
+      ),
+      xl: [...twElement.classList].filter((className) =>
+        className.startsWith('xl:')
+      ),
+      lg: [...twElement.classList].filter((className) =>
+        className.startsWith('lg:')
+      ),
+      md: [...twElement.classList].filter((className) =>
+        className.startsWith('md:')
+      ),
+      sm: [...twElement.classList].filter((className) =>
+        className.startsWith('sm:')
+      ),
     }
-
-    let activeBreakpoint = Object.keys(tailwindBreakpoints)
-      .filter((breakpointWidth) => breakpointWidth < windowWidth)
-      .at(-1)
-
-    return tailwindBreakpoints[activeBreakpoint] || 'Default'
   }
 }
