@@ -228,6 +228,9 @@ export default function () {
       sm: [...twElement.classList].filter((className) =>
         className.startsWith('sm:')
       ),
+      dark: [...twElement.classList].filter((className) =>
+        className.startsWith('dark:')
+      ),
     }
   }
 }
