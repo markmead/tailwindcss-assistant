@@ -35,7 +35,7 @@ export default function () {
 
         <label
           for="${id}"
-          class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+          class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 block grid place-content-center"
         >
           ${name}
         </label>
@@ -44,7 +44,15 @@ export default function () {
 
     let twaPositionButtonCreator = (name, classes) => `
       <div>
-        <button data-position='${classes}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-10 block grid place-content-center">
+        <button data-position='${classes}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 block grid place-content-center">
+          ${name}
+        </button>
+      </div>
+    `
+
+    let twaRelativeButtonCreator = (name) => `
+      <div>
+        <button data-relative='${name}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-14 block grid place-content-center">
           ${name}
         </button>
       </div>
@@ -125,6 +133,22 @@ export default function () {
             </strong>
 
             <div class="flex flex-wrap gap-2 mt-1">
+              ${twaRelativeButtonCreator('parent')}
+
+              ${twaRelativeButtonCreator('child')}
+
+              ${twaRelativeButtonCreator('prev')}
+
+              ${twaRelativeButtonCreator('next')}
+            </div>
+          </div>
+
+          <div>
+            <strong class="text-slate-400 font-medium text-sm">
+              Settings - Position
+            </strong>
+
+            <div class="flex flex-wrap gap-2 mt-1">
               ${twaPositionButtonCreator('tl', ['top-4', 'left-4'])}
 
               ${twaPositionButtonCreator('tr', ['top-4', 'right-4'])}
@@ -162,6 +186,10 @@ export default function () {
       ...document.querySelectorAll('[data-position]'),
     ]
 
+    let twaRelativeElementButtons = [
+      ...document.querySelectorAll('[data-relative]'),
+    ]
+
     document.addEventListener('click', (event) => {
       if (event.metaKey) {
         twaPopup.open = true
@@ -196,6 +224,59 @@ export default function () {
           currentTarget.className = twaClassesEditor.value
 
           twaBreakpointClasses = getBreakpointClasses(currentTarget)
+        })
+
+        twaRelativeElementButtons.forEach((relativeElementButton) => {
+          relativeElementButton.addEventListener('click', () => {
+            let relativeElement
+
+            let relativeElementKey =
+              relativeElementButton.getAttribute('data-relative')
+
+            if (relativeElementKey === 'parent') {
+              relativeElement = currentTarget.parentElement
+                ? currentTarget.parentElement
+                : currentTarget
+
+              !currentTarget.parentElement && console.warn('No parent element')
+            }
+
+            if (relativeElementKey === 'prev') {
+              relativeElement = currentTarget.previousElementSibling
+                ? currentTarget.previousElementSibling
+                : currentTarget
+
+              !currentTarget.previousElementSibling &&
+                console.warn('No previous sibling element')
+            }
+
+            if (relativeElementKey === 'next') {
+              relativeElement = currentTarget.nextElementSibling
+                ? currentTarget.nextElementSibling
+                : currentTarget
+
+              !currentTarget.nextElementSibling &&
+                console.warn('No next sibling element')
+            }
+
+            if (relativeElementKey === 'child') {
+              relativeElement = currentTarget.firstElementChild
+                ? currentTarget.firstElementChild
+                : currentTarget
+
+              !currentTarget.firstElementChild &&
+                console.warn('No child element')
+            }
+            currentTarget = relativeElement
+
+            twaClasses.innerText = currentTarget.className
+
+            twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
+
+            twaClassesEditor.value = currentTarget.className
+
+            twaBreakpointClasses = getBreakpointClasses(currentTarget)
+          })
         })
       }
     })

@@ -1,17 +1,23 @@
-var f=Object.defineProperty;var b=l=>f(l,"__esModule",{value:!0});var k=(l,a)=>{b(l);for(var e in a)f(l,e,{get:a[e],enumerable:!0})};k(exports,{default:()=>C});function w(){document.addEventListener("DOMContentLoaded",()=>{let a=()=>{let s=window.innerWidth,t={640:"SM",768:"MD",1024:"LG",1280:"XL",1536:"2XL"},c=Object.keys(t).filter(i=>i<s).at(-1);return t[c]||"Default"},e=document.createElement("script");e.setAttribute("src","https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"),document.head.appendChild(e);let o=document.createElement("div"),n=(s,t)=>`
+var h=Object.defineProperty;var L=l=>h(l,"__esModule",{value:!0});var $=(l,i)=>{L(l);for(var t in i)h(l,t,{get:i[t],enumerable:!0})};$(exports,{default:()=>y});function v(){document.addEventListener("DOMContentLoaded",()=>{let i=()=>{let s=window.innerWidth,e={640:"SM",768:"MD",1024:"LG",1280:"XL",1536:"2XL"},d=Object.keys(e).filter(a=>a<s).at(-1);return e[d]||"Default"},t=document.createElement("script");t.setAttribute("src","https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"),document.head.appendChild(t);let o=document.createElement("div"),r=(s,e)=>`
       <div>
-        <input type="checkbox" id="${s}" name="${t}" checked class="sr-only peer" />
+        <input type="checkbox" id="${s}" name="${e}" checked class="sr-only peer" />
 
         <label
           for="${s}"
-          class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+          class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 block grid place-content-center"
         >
-          ${t}
+          ${e}
         </label>
       </div>
-    `,r=(s,t)=>`
+    `,c=(s,e)=>`
       <div>
-        <button data-position='${t}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-10 block grid place-content-center">
+        <button data-position='${e}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 block grid place-content-center">
+          ${s}
+        </button>
+      </div>
+    `,m=s=>`
+      <div>
+        <button data-relative='${s}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-14 block grid place-content-center">
           ${s}
         </button>
       </div>
@@ -55,17 +61,17 @@ var f=Object.defineProperty;var b=l=>f(l,"__esModule",{value:!0});var k=(l,a)=>{
               </legend>
 
               <div class="flex flex-wrap gap-2 mt-1">
-                ${n("twaClasses2xl","2xl")}
+                ${r("twaClasses2xl","2xl")}
 
-                ${n("twaClassesXl","xl")}
+                ${r("twaClassesXl","xl")}
 
-                ${n("twaClassesLg","lg")}
+                ${r("twaClassesLg","lg")}
 
-                ${n("twaClassesMd","md")}
+                ${r("twaClassesMd","md")}
 
-                ${n("twaClassesSm","sm")}
+                ${r("twaClassesSm","sm")}
 
-                ${n("twaClassesDark","dark")}
+                ${r("twaClassesDark","dark")}
               </div>
             </fieldset>
           </div>
@@ -90,15 +96,31 @@ var f=Object.defineProperty;var b=l=>f(l,"__esModule",{value:!0});var k=(l,a)=>{
             </strong>
 
             <div class="flex flex-wrap gap-2 mt-1">
-              ${r("tl",["top-4","left-4"])}
+              ${m("parent")}
 
-              ${r("tr",["top-4","right-4"])}
+              ${m("child")}
 
-              ${r("bl",["bottom-4","left-4"])}
+              ${m("prev")}
 
-              ${r("br",["bottom-4","right-4"])}
+              ${m("next")}
+            </div>
+          </div>
+
+          <div>
+            <strong class="text-slate-400 font-medium text-sm">
+              Settings - Position
+            </strong>
+
+            <div class="flex flex-wrap gap-2 mt-1">
+              ${c("tl",["top-4","left-4"])}
+
+              ${c("tr",["top-4","right-4"])}
+
+              ${c("bl",["bottom-4","left-4"])}
+
+              ${c("br",["bottom-4","right-4"])}
             </div>
           </div>
         </div>
       </details>
-    `,o.classList.add("fixed");let d=["right-4","bottom-4"];d.forEach(s=>o.classList.add(s)),document.body.appendChild(o);let m=document.getElementById("twaBreakpoint"),u=document.getElementById("twaClasses"),g=[...document.querySelectorAll('input[type="checkbox"]')],x=document.getElementById("twaClassesAdd"),p=document.getElementById("twaClassesEditor"),h=[...document.querySelectorAll("[data-position]")];document.addEventListener("click",s=>{if(s.metaKey){twaPopup.open=!0;let t=s.target;m.innerText=a(),u.innerText=t.className,g.forEach(i=>i.checked=!0),p.value=t.className;let c=l(t);g.forEach(i=>{i.addEventListener("input",()=>{c[i.name].forEach(v=>t.classList.toggle(v)),u.innerText=t.className,p.value=t.className})}),x.addEventListener("submit",i=>{i.preventDefault(),t.className=p.value,c=l(t)})}}),window.addEventListener("resize",()=>{m.innerText=a()}),h.forEach(s=>{s.addEventListener("click",()=>{d.forEach(t=>o.classList.remove(t)),d=s.getAttribute("data-position").split(","),d.forEach(t=>o.classList.add(t))})})});let l=a=>({"2xl":[...a.classList].filter(e=>e.startsWith("2xl:")),xl:[...a.classList].filter(e=>e.startsWith("xl:")),lg:[...a.classList].filter(e=>e.startsWith("lg:")),md:[...a.classList].filter(e=>e.startsWith("md:")),sm:[...a.classList].filter(e=>e.startsWith("sm:")),dark:[...a.classList].filter(e=>e.startsWith("dark:"))})}var C=w;0&&(module.exports={});
+    `,o.classList.add("fixed");let p=["right-4","bottom-4"];p.forEach(s=>o.classList.add(s)),document.body.appendChild(o);let w=document.getElementById("twaBreakpoint"),f=document.getElementById("twaClasses"),x=[...document.querySelectorAll('input[type="checkbox"]')],b=document.getElementById("twaClassesAdd"),u=document.getElementById("twaClassesEditor"),E=[...document.querySelectorAll("[data-position]")],k=[...document.querySelectorAll("[data-relative]")];document.addEventListener("click",s=>{if(s.metaKey){twaPopup.open=!0;let e=s.target;w.innerText=i(),f.innerText=e.className,x.forEach(a=>a.checked=!0),u.value=e.className;let d=l(e);x.forEach(a=>{a.addEventListener("input",()=>{d[a.name].forEach(n=>e.classList.toggle(n)),f.innerText=e.className,u.value=e.className})}),b.addEventListener("submit",a=>{a.preventDefault(),e.className=u.value,d=l(e)}),k.forEach(a=>{a.addEventListener("click",()=>{let n,g=a.getAttribute("data-relative");g==="parent"&&(n=e.parentElement?e.parentElement:e,!e.parentElement&&console.warn("No parent element")),g==="prev"&&(n=e.previousElementSibling?e.previousElementSibling:e,!e.previousElementSibling&&console.warn("No previous sibling element")),g==="next"&&(n=e.nextElementSibling?e.nextElementSibling:e,!e.nextElementSibling&&console.warn("No next sibling element")),g==="child"&&(n=e.firstElementChild?e.firstElementChild:e,!e.firstElementChild&&console.warn("No child element")),e=n,f.innerText=e.className,x.forEach(C=>C.checked=!0),u.value=e.className,d=l(e)})})}}),window.addEventListener("resize",()=>{w.innerText=i()}),E.forEach(s=>{s.addEventListener("click",()=>{p.forEach(e=>o.classList.remove(e)),p=s.getAttribute("data-position").split(","),p.forEach(e=>o.classList.add(e))})})});let l=i=>({"2xl":[...i.classList].filter(t=>t.startsWith("2xl:")),xl:[...i.classList].filter(t=>t.startsWith("xl:")),lg:[...i.classList].filter(t=>t.startsWith("lg:")),md:[...i.classList].filter(t=>t.startsWith("md:")),sm:[...i.classList].filter(t=>t.startsWith("sm:")),dark:[...i.classList].filter(t=>t.startsWith("dark:"))})}var y=v;0&&(module.exports={});
