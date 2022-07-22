@@ -1,7 +1,6 @@
 # Tailwind CSS Assistant
 
-
-https://user-images.githubusercontent.com/50486078/180165763-c77a0ecf-e179-4a89-a8f0-5c1894de0fcb.mov
+**[See it in action on this example website 🎉](https://tailwindcss-assistant-example.vercel.app/)**
 
 ✅ Small JavaScript package that helps you work with Tailwind CSS by...
 
