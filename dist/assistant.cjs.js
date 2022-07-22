@@ -1,16 +1,22 @@
-var u=Object.defineProperty;var x=l=>u(l,"__esModule",{value:!0});var h=(l,s)=>{x(l);for(var e in s)u(l,e,{get:s[e],enumerable:!0})};h(exports,{default:()=>v});function g(){document.addEventListener("DOMContentLoaded",()=>{let s=()=>{let i=window.innerWidth,t={640:"SM",768:"MD",1024:"LG",1280:"XL",1536:"2XL"},r=Object.keys(t).filter(a=>a<i).at(-1);return t[r]||"Default"},e=document.createElement("script");e.setAttribute("src","https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"),document.head.appendChild(e);let d=document.createElement("div"),n=(i,t)=>`
+var f=Object.defineProperty;var b=l=>f(l,"__esModule",{value:!0});var k=(l,a)=>{b(l);for(var e in a)f(l,e,{get:a[e],enumerable:!0})};k(exports,{default:()=>C});function w(){document.addEventListener("DOMContentLoaded",()=>{let a=()=>{let s=window.innerWidth,t={640:"SM",768:"MD",1024:"LG",1280:"XL",1536:"2XL"},c=Object.keys(t).filter(i=>i<s).at(-1);return t[c]||"Default"},e=document.createElement("script");e.setAttribute("src","https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"),document.head.appendChild(e);let o=document.createElement("div"),n=(s,t)=>`
       <div>
-        <input type="checkbox" id="${i}" name="${t}" checked class="sr-only peer" />
+        <input type="checkbox" id="${s}" name="${t}" checked class="sr-only peer" />
 
         <label
-          for="${i}"
+          for="${s}"
           class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
         >
           ${t}
         </label>
       </div>
-    `;d.innerHTML=`
-      <details id="twaPopup" class="fixed right-4 bottom-4 bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
+    `,r=(s,t)=>`
+      <div>
+        <button data-position='${t}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-10 block grid place-content-center">
+          ${s}
+        </button>
+      </div>
+    `;o.innerHTML=`
+      <details id="twaPopup" class="bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
         <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-indigo-500 focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path d="M12 14l9-5-9-5-9 5 9 5z" />
@@ -36,7 +42,7 @@ var u=Object.defineProperty;var x=l=>u(l,"__esModule",{value:!0});var h=(l,s)=>{
 
           <div>
             <strong class="text-slate-400 font-medium text-sm">
-              Classes
+              Classes - View
             </strong>
 
             <pre id="twaClasses" class="whitespace-pre-wrap font-mono p-2 bg-slate-800 rounded-md text-slate-500 text-sm mt-1"></pre>
@@ -45,7 +51,7 @@ var u=Object.defineProperty;var x=l=>u(l,"__esModule",{value:!0});var h=(l,s)=>{
           <div>
             <fieldset>
               <legend class="text-slate-400 font-medium text-sm">
-                Edit
+                Breakpoints - Edit
               </legend>
 
               <div class="flex flex-wrap gap-2 mt-1">
@@ -67,7 +73,7 @@ var u=Object.defineProperty;var x=l=>u(l,"__esModule",{value:!0});var h=(l,s)=>{
           <div>
             <form id="twaClassesAdd">
               <label for="twaClassesEditor" class="text-slate-400 font-medium text-sm">
-                Add
+                Classes - Edit
               </label>
 
               <textarea id="twaClassesEditor" rows="4" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700"></textarea>
@@ -77,6 +83,22 @@ var u=Object.defineProperty;var x=l=>u(l,"__esModule",{value:!0});var h=(l,s)=>{
               </button>
             </form>
           </div>
+
+          <div>
+            <strong class="text-slate-400 font-medium text-sm">
+              Settings - Position
+            </strong>
+
+            <div class="flex flex-wrap gap-2 mt-1">
+              ${r("tl",["top-4","left-4"])}
+
+              ${r("tr",["top-4","right-4"])}
+
+              ${r("bl",["bottom-4","left-4"])}
+
+              ${r("br",["bottom-4","right-4"])}
+            </div>
+          </div>
         </div>
       </details>
-    `,document.body.appendChild(d);let c=document.getElementById("twaBreakpoint"),p=document.getElementById("twaClasses"),m=[...document.querySelectorAll('input[type="checkbox"]')],f=document.getElementById("twaClassesAdd"),o=document.getElementById("twaClassesEditor");document.addEventListener("click",i=>{if(i.metaKey){twaPopup.open=!0;let t=i.target;c.innerText=s(),p.innerText=t.className,m.forEach(a=>a.checked=!0),o.value=t.className;let r=l(t);m.forEach(a=>{a.addEventListener("input",()=>{r[a.name].forEach(w=>t.classList.toggle(w)),p.innerText=t.className,o.value=t.className})}),f.addEventListener("submit",a=>{a.preventDefault(),t.className=o.value,r=l(t)})}}),window.addEventListener("resize",()=>{c.innerText=s()})});let l=s=>({"2xl":[...s.classList].filter(e=>e.startsWith("2xl:")),xl:[...s.classList].filter(e=>e.startsWith("xl:")),lg:[...s.classList].filter(e=>e.startsWith("lg:")),md:[...s.classList].filter(e=>e.startsWith("md:")),sm:[...s.classList].filter(e=>e.startsWith("sm:")),dark:[...s.classList].filter(e=>e.startsWith("dark:"))})}var v=g;0&&(module.exports={});
+    `,o.classList.add("fixed");let d=["right-4","bottom-4"];d.forEach(s=>o.classList.add(s)),document.body.appendChild(o);let m=document.getElementById("twaBreakpoint"),u=document.getElementById("twaClasses"),g=[...document.querySelectorAll('input[type="checkbox"]')],x=document.getElementById("twaClassesAdd"),p=document.getElementById("twaClassesEditor"),h=[...document.querySelectorAll("[data-position]")];document.addEventListener("click",s=>{if(s.metaKey){twaPopup.open=!0;let t=s.target;m.innerText=a(),u.innerText=t.className,g.forEach(i=>i.checked=!0),p.value=t.className;let c=l(t);g.forEach(i=>{i.addEventListener("input",()=>{c[i.name].forEach(v=>t.classList.toggle(v)),u.innerText=t.className,p.value=t.className})}),x.addEventListener("submit",i=>{i.preventDefault(),t.className=p.value,c=l(t)})}}),window.addEventListener("resize",()=>{m.innerText=a()}),h.forEach(s=>{s.addEventListener("click",()=>{d.forEach(t=>o.classList.remove(t)),d=s.getAttribute("data-position").split(","),d.forEach(t=>o.classList.add(t))})})});let l=a=>({"2xl":[...a.classList].filter(e=>e.startsWith("2xl:")),xl:[...a.classList].filter(e=>e.startsWith("xl:")),lg:[...a.classList].filter(e=>e.startsWith("lg:")),md:[...a.classList].filter(e=>e.startsWith("md:")),sm:[...a.classList].filter(e=>e.startsWith("sm:")),dark:[...a.classList].filter(e=>e.startsWith("dark:"))})}var C=w;0&&(module.exports={});
