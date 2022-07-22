@@ -92,6 +92,17 @@ var p=Object.defineProperty;var x=l=>p(l,"__esModule",{value:!0});var h=(l,t)=>{
                   sm
                 </label>
               </div>
+
+              <div>
+                <input type="checkbox" id="twaClassesDark" name="dark" checked class="sr-only" />
+
+                <label
+                  for="twaClassesDark"
+                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+                >
+                  dark
+                </label>
+              </div>
             </fieldset>
           </div>
 
