@@ -29,9 +29,22 @@ export default function () {
 
     let popupWrapper = document.createElement('div')
 
+    let twaBreakpointInputsCreator = (id, name) => `
+      <div>
+        <input type="checkbox" id="${id}" name="${name}" checked class="sr-only peer" />
+
+        <label
+          for="${id}"
+          class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
+        >
+          ${name}
+        </label>
+      </div>
+    `
+
     popupWrapper.innerHTML = `
       <details id="twaPopup" class="fixed right-4 bottom-4 bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
-        <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white">
+        <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-indigo-500 focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path d="M12 14l9-5-9-5-9 5 9 5z" />
             <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
@@ -68,71 +81,18 @@ export default function () {
                 Edit
               </legend>
 
-              <div class="flex flex-wrap gap-1 mt-1">
-                <div>
-                  <input type="checkbox" id="twaClasses2xl" name="2xl" checked class="sr-only" />
+              <div class="flex flex-wrap gap-2 mt-1">
+                ${twaBreakpointInputsCreator('twaClasses2xl', '2xl')}
 
-                  <label
-                    for="twaClasses2xl"
-                    class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
-                  >
-                    2xl
-                  </label>
-                </div>
+                ${twaBreakpointInputsCreator('twaClassesXl', 'xl')}
 
-              <div>
-                <input type="checkbox" id="twaClassesXl" name="xl" checked class="sr-only" />
+                ${twaBreakpointInputsCreator('twaClassesLg', 'lg')}
 
-                <label
-                  for="twaClassesXl"
-                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
-                >
-                  xl
-                </label>
-              </div>
+                ${twaBreakpointInputsCreator('twaClassesMd', 'md')}
 
-              <div>
-                <input type="checkbox" id="twaClassesLg" name="lg" checked class="sr-only" />
+                ${twaBreakpointInputsCreator('twaClassesSm', 'sm')}
 
-                <label
-                  for="twaClassesLg"
-                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
-                >
-                  lg
-                </label>
-              </div>
-
-              <div>
-                <input type="checkbox" id="twaClassesMd" name="md" checked class="sr-only" />
-
-                <label
-                  for="twaClassesMd"
-                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
-                >
-                  md
-                </label>
-              </div>
-
-              <div>
-                <input type="checkbox" id="twaClassesSm" name="sm" checked class="sr-only" />
-
-                <label
-                  for="twaClassesSm"
-                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
-                >
-                  sm
-                </label>
-              </div>
-
-              <div>
-                <input type="checkbox" id="twaClassesDark" name="dark" checked class="sr-only" />
-
-                <label
-                  for="twaClassesDark"
-                  class="bg-slate-800 rounded-md text-sm font-medium hover:ring ring-indigo-500 text-white h-8 w-10 block grid place-content-center"
-                >
-                  dark
-                </label>
+                ${twaBreakpointInputsCreator('twaClassesDark', 'dark')}
               </div>
             </fieldset>
           </div>
@@ -143,9 +103,9 @@ export default function () {
                 Add
               </label>
 
-              <textarea id="twaClassesEditor" rows="4" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm"></textarea>
+              <textarea id="twaClassesEditor" rows="4" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700"></textarea>
 
-              <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full">
+              <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full focus:outline-none focus:ring focus:ring-indigo-500 hover:ring hover:ring-indigo-600">
                 Update
               </button>
             </form>
