@@ -2,6 +2,8 @@
 
 **[See it in action on this example website 🎉](https://tailwindcss-assistant-example.vercel.app/)**
 
+![Tailwind CSS Assistant Example](https://user-images.githubusercontent.com/50486078/180596703-753d28ad-d404-4805-8800-c2cbdb78f1c0.gif)
+
 ✅ Small JavaScript package that helps you work with Tailwind CSS by...
 
 - Showing you the class names of the current element
