@@ -37,7 +37,7 @@ export default function () {
           for="${id}"
           class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 block grid place-content-center"
         >
-          ${name}
+          <span class="select-none">${name}</span>
         </label>
       </div>
     `
@@ -45,7 +45,7 @@ export default function () {
     let twaPositionButtonCreator = (name, classes) => `
       <div>
         <button data-position='${classes}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 block grid place-content-center">
-          ${name}
+          <span class="select-none">${name}</span>
         </button>
       </div>
     `
@@ -53,84 +53,76 @@ export default function () {
     let twaRelativeButtonCreator = (name) => `
       <div>
         <button data-relative='${name}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-14 block grid place-content-center">
-          ${name}
+          <span class="select-none">${name}</span>
         </button>
       </div>
+    `
+
+    let twaTitleCreator = (title) => `
+      <strong class="text-slate-400 font-medium text-sm select-none">
+        ${title}
+      </strong>
     `
 
     popupWrapper.innerHTML = `
       <details id="twaPopup" class="bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
         <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-indigo-500 focus:outline-none">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path d="M12 14l9-5-9-5-9 5 9 5z" />
-            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-          </svg>
+          <span class="select-none">
+            🤖
+          </span>
 
-          <span class="group-open:block hidden text-white text-sm font-medium">
+          <span class="group-open:block hidden text-white text-sm font-medium select-none">
             - Tailwind CSS Assistant
           </span>
         </summary>
 
         <div class="p-4 space-y-6">
-          <p class="text-center text-xs text-slate-400">
+          <p class="text-center text-xs text-slate-400 select-none">
             Open element CSS information with <span class="font-medium">CMD + Click</span>.
           </p>
 
           <div>
-            <strong class="text-slate-400 font-medium text-sm">
-              Breakpoint: <span id="twaBreakpoint"></span>
-            </strong>
+            ${twaTitleCreator('Breakpoint: <span id="twaBreakpoint"></span>')}
           </div>
 
           <div>
-            <strong class="text-slate-400 font-medium text-sm">
-              Classes - View
-            </strong>
+            ${twaTitleCreator('Classes')}
 
             <pre id="twaClasses" class="whitespace-pre-wrap font-mono p-2 bg-slate-800 rounded-md text-slate-500 text-sm mt-1"></pre>
           </div>
 
           <div>
-            <fieldset>
-              <legend class="text-slate-400 font-medium text-sm">
-                Breakpoints - Edit
-              </legend>
+            ${twaTitleCreator('Edit Breakpoints')}
 
-              <div class="flex flex-wrap gap-2 mt-1">
-                ${twaBreakpointInputsCreator('twaClasses2xl', '2xl')}
+            <fieldset class="flex flex-wrap gap-2 mt-1">
+              ${twaBreakpointInputsCreator('twaClasses2xl', '2xl')}
 
-                ${twaBreakpointInputsCreator('twaClassesXl', 'xl')}
+              ${twaBreakpointInputsCreator('twaClassesXl', 'xl')}
 
-                ${twaBreakpointInputsCreator('twaClassesLg', 'lg')}
+              ${twaBreakpointInputsCreator('twaClassesLg', 'lg')}
 
-                ${twaBreakpointInputsCreator('twaClassesMd', 'md')}
+              ${twaBreakpointInputsCreator('twaClassesMd', 'md')}
 
-                ${twaBreakpointInputsCreator('twaClassesSm', 'sm')}
+              ${twaBreakpointInputsCreator('twaClassesSm', 'sm')}
 
-                ${twaBreakpointInputsCreator('twaClassesDark', 'dark')}
-              </div>
+              ${twaBreakpointInputsCreator('twaClassesDark', 'dark')}
             </fieldset>
           </div>
 
           <div>
             <form id="twaClassesAdd">
-              <label for="twaClassesEditor" class="text-slate-400 font-medium text-sm">
-                Classes - Edit
-              </label>
+              ${twaTitleCreator('Edit Classes')}
 
               <textarea id="twaClassesEditor" rows="4" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700"></textarea>
 
               <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full focus:outline-none focus:ring focus:ring-indigo-500 hover:ring hover:ring-indigo-600">
-                Update
+                <span class="select-none">Update</span>
               </button>
             </form>
           </div>
 
           <div>
-            <strong class="text-slate-400 font-medium text-sm">
-              Settings - Position
-            </strong>
+            ${twaTitleCreator('Change Element')}
 
             <div class="flex flex-wrap gap-2 mt-1">
               ${twaRelativeButtonCreator('parent')}
@@ -141,12 +133,12 @@ export default function () {
 
               ${twaRelativeButtonCreator('next')}
             </div>
+
+            <div id="twaError" class="mt-2 text-amber-500 text-sm font-medium select-none" hidden></div>
           </div>
 
           <div>
-            <strong class="text-slate-400 font-medium text-sm">
-              Settings - Position
-            </strong>
+            ${twaTitleCreator('Popup Position')}
 
             <div class="flex flex-wrap gap-2 mt-1">
               ${twaPositionButtonCreator('tl', ['top-4', 'left-4'])}
@@ -190,11 +182,21 @@ export default function () {
       ...document.querySelectorAll('[data-relative]'),
     ]
 
+    let twaError = document.getElementById('twaError')
+
+    let currentTarget
+
+    let twaBreakpointClasses
+
     document.addEventListener('click', (event) => {
+      if (!twaPopup.contains(event.target)) {
+        twaPopup.open = false
+      }
+
       if (event.metaKey) {
         twaPopup.open = true
 
-        let currentTarget = event.target
+        currentTarget = event.target
 
         twaBreakpoint.innerText = getActiveBreakpoint()
 
@@ -204,81 +206,81 @@ export default function () {
 
         twaClassesEditor.value = currentTarget.className
 
-        let twaBreakpointClasses = getBreakpointClasses(currentTarget)
-
-        twaBreakpointInputs.forEach((twaInput) => {
-          twaInput.addEventListener('input', () => {
-            twaBreakpointClasses[twaInput.name].forEach((twClass) =>
-              currentTarget.classList.toggle(twClass)
-            )
-
-            twaClasses.innerText = currentTarget.className
-
-            twaClassesEditor.value = currentTarget.className
-          })
-        })
-
-        twaClassesAdd.addEventListener('submit', (event) => {
-          event.preventDefault()
-
-          currentTarget.className = twaClassesEditor.value
-
-          twaBreakpointClasses = getBreakpointClasses(currentTarget)
-        })
-
-        twaRelativeElementButtons.forEach((relativeElementButton) => {
-          relativeElementButton.addEventListener('click', () => {
-            let relativeElement
-
-            let relativeElementKey =
-              relativeElementButton.getAttribute('data-relative')
-
-            if (relativeElementKey === 'parent') {
-              relativeElement = currentTarget.parentElement
-                ? currentTarget.parentElement
-                : currentTarget
-
-              !currentTarget.parentElement && console.warn('No parent element')
-            }
-
-            if (relativeElementKey === 'prev') {
-              relativeElement = currentTarget.previousElementSibling
-                ? currentTarget.previousElementSibling
-                : currentTarget
-
-              !currentTarget.previousElementSibling &&
-                console.warn('No previous sibling element')
-            }
-
-            if (relativeElementKey === 'next') {
-              relativeElement = currentTarget.nextElementSibling
-                ? currentTarget.nextElementSibling
-                : currentTarget
-
-              !currentTarget.nextElementSibling &&
-                console.warn('No next sibling element')
-            }
-
-            if (relativeElementKey === 'child') {
-              relativeElement = currentTarget.firstElementChild
-                ? currentTarget.firstElementChild
-                : currentTarget
-
-              !currentTarget.firstElementChild &&
-                console.warn('No child element')
-            }
-            currentTarget = relativeElement
-
-            twaClasses.innerText = currentTarget.className
-
-            twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
-
-            twaClassesEditor.value = currentTarget.className
-
-            twaBreakpointClasses = getBreakpointClasses(currentTarget)
-          })
-        })
+        twaBreakpointClasses = getBreakpointClasses(currentTarget)
       }
+    })
+
+    twaBreakpointInputs.forEach((twaInput) => {
+      twaInput.addEventListener('input', () => {
+        twaBreakpointClasses[twaInput.name].forEach((twClass) =>
+          currentTarget.classList.toggle(twClass)
+        )
+
+        twaClasses.innerText = currentTarget.className
+
+        twaClassesEditor.value = currentTarget.className
+      })
+    })
+
+    twaRelativeElementButtons.forEach((relativeElementButton) => {
+      relativeElementButton.addEventListener('click', () => {
+        let relativeElement
+
+        let relativeElementKey =
+          relativeElementButton.getAttribute('data-relative')
+
+        if (relativeElementKey === 'parent') {
+          relativeElement = currentTarget.parentElement
+            ? currentTarget.parentElement
+            : currentTarget
+
+          !currentTarget.parentElement && renderError('No parent element')
+        }
+
+        if (relativeElementKey === 'prev') {
+          relativeElement = currentTarget.previousElementSibling
+            ? currentTarget.previousElementSibling
+            : currentTarget
+
+          !currentTarget.previousElementSibling &&
+            renderError('No previous sibling element')
+        }
+
+        if (relativeElementKey === 'next') {
+          relativeElement = currentTarget.nextElementSibling
+            ? currentTarget.nextElementSibling
+            : currentTarget
+
+          !currentTarget.nextElementSibling &&
+            renderError('No next sibling element')
+        }
+
+        if (relativeElementKey === 'child') {
+          relativeElement = currentTarget.firstElementChild
+            ? currentTarget.firstElementChild
+            : currentTarget
+
+          !currentTarget.firstElementChild && renderError('No child element')
+        }
+
+        currentTarget = relativeElement
+
+        twaClasses.innerText = currentTarget.className
+
+        twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
+
+        twaClassesEditor.value = currentTarget.className
+
+        twaBreakpointClasses = getBreakpointClasses(currentTarget)
+      })
+    })
+
+    twaClassesAdd.addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      currentTarget.className = twaClassesEditor.value
+
+      twaBreakpointClasses = getBreakpointClasses(currentTarget)
     })
 
     window.addEventListener('resize', () => {
@@ -299,6 +301,16 @@ export default function () {
       })
     })
   })
+
+  let renderError = (message) => {
+    twaError.removeAttribute('hidden')
+
+    twaError.innerText = message
+
+    setTimeout(() => {
+      twaError.setAttribute('hidden', true)
+    }, 3000)
+  }
 
   let getBreakpointClasses = (twElement) => {
     return {
