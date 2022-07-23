@@ -58,6 +58,12 @@ export default function () {
       </div>
     `
 
+    let twaTitleCreator = (title) => `
+      <strong class="text-slate-400 font-medium text-sm">
+        ${title}
+      </strong>
+    `
+
     popupWrapper.innerHTML = `
       <details id="twaPopup" class="bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
         <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-indigo-500 focus:outline-none">
@@ -76,46 +82,36 @@ export default function () {
           </p>
 
           <div>
-            <strong class="text-slate-400 font-medium text-sm">
-              Breakpoint: <span id="twaBreakpoint"></span>
-            </strong>
+            ${twaTitleCreator('Breakpoint: <span id="twaBreakpoint"></span>')}
           </div>
 
           <div>
-            <strong class="text-slate-400 font-medium text-sm">
-              Classes - View
-            </strong>
+            ${twaTitleCreator('Classes')}
 
             <pre id="twaClasses" class="whitespace-pre-wrap font-mono p-2 bg-slate-800 rounded-md text-slate-500 text-sm mt-1"></pre>
           </div>
 
           <div>
-            <fieldset>
-              <legend class="text-slate-400 font-medium text-sm">
-                Breakpoints - Edit
-              </legend>
+            ${twaTitleCreator('Edit Breakpoints')}
 
-              <div class="flex flex-wrap gap-2 mt-1">
-                ${twaBreakpointInputsCreator('twaClasses2xl', '2xl')}
+            <fieldset class="flex flex-wrap gap-2 mt-1">
+              ${twaBreakpointInputsCreator('twaClasses2xl', '2xl')}
 
-                ${twaBreakpointInputsCreator('twaClassesXl', 'xl')}
+              ${twaBreakpointInputsCreator('twaClassesXl', 'xl')}
 
-                ${twaBreakpointInputsCreator('twaClassesLg', 'lg')}
+              ${twaBreakpointInputsCreator('twaClassesLg', 'lg')}
 
-                ${twaBreakpointInputsCreator('twaClassesMd', 'md')}
+              ${twaBreakpointInputsCreator('twaClassesMd', 'md')}
 
-                ${twaBreakpointInputsCreator('twaClassesSm', 'sm')}
+              ${twaBreakpointInputsCreator('twaClassesSm', 'sm')}
 
-                ${twaBreakpointInputsCreator('twaClassesDark', 'dark')}
-              </div>
+              ${twaBreakpointInputsCreator('twaClassesDark', 'dark')}
             </fieldset>
           </div>
 
           <div>
             <form id="twaClassesAdd">
-              <label for="twaClassesEditor" class="text-slate-400 font-medium text-sm">
-                Classes - Edit
-              </label>
+              ${twaTitleCreator('Edit Classes')}
 
               <textarea id="twaClassesEditor" rows="4" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700"></textarea>
 
@@ -126,9 +122,7 @@ export default function () {
           </div>
 
           <div>
-            <strong class="text-slate-400 font-medium text-sm">
-              Settings - Position
-            </strong>
+            ${twaTitleCreator('Change Element')}
 
             <div class="flex flex-wrap gap-2 mt-1">
               ${twaRelativeButtonCreator('parent')}
@@ -142,9 +136,7 @@ export default function () {
           </div>
 
           <div>
-            <strong class="text-slate-400 font-medium text-sm">
-              Settings - Position
-            </strong>
+            ${twaTitleCreator('Popup Position')}
 
             <div class="flex flex-wrap gap-2 mt-1">
               ${twaPositionButtonCreator('tl', ['top-4', 'left-4'])}
