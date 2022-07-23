@@ -61,11 +61,9 @@ export default function () {
     popupWrapper.innerHTML = `
       <details id="twaPopup" class="bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
         <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-indigo-500 focus:outline-none">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path d="M12 14l9-5-9-5-9 5 9 5z" />
-            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-          </svg>
+          <span>
+            🤖
+          </span>
 
           <span class="group-open:block hidden text-white text-sm font-medium">
             - Tailwind CSS Assistant
@@ -190,11 +188,19 @@ export default function () {
       ...document.querySelectorAll('[data-relative]'),
     ]
 
+    let currentTarget
+
+    let twaBreakpointClasses
+
     document.addEventListener('click', (event) => {
+      if (!twaPopup.contains(event.target)) {
+        twaPopup.open = false
+      }
+
       if (event.metaKey) {
         twaPopup.open = true
 
-        let currentTarget = event.target
+        currentTarget = event.target
 
         twaBreakpoint.innerText = getActiveBreakpoint()
 
@@ -204,81 +210,80 @@ export default function () {
 
         twaClassesEditor.value = currentTarget.className
 
-        let twaBreakpointClasses = getBreakpointClasses(currentTarget)
-
-        twaBreakpointInputs.forEach((twaInput) => {
-          twaInput.addEventListener('input', () => {
-            twaBreakpointClasses[twaInput.name].forEach((twClass) =>
-              currentTarget.classList.toggle(twClass)
-            )
-
-            twaClasses.innerText = currentTarget.className
-
-            twaClassesEditor.value = currentTarget.className
-          })
-        })
-
-        twaClassesAdd.addEventListener('submit', (event) => {
-          event.preventDefault()
-
-          currentTarget.className = twaClassesEditor.value
-
-          twaBreakpointClasses = getBreakpointClasses(currentTarget)
-        })
-
-        twaRelativeElementButtons.forEach((relativeElementButton) => {
-          relativeElementButton.addEventListener('click', () => {
-            let relativeElement
-
-            let relativeElementKey =
-              relativeElementButton.getAttribute('data-relative')
-
-            if (relativeElementKey === 'parent') {
-              relativeElement = currentTarget.parentElement
-                ? currentTarget.parentElement
-                : currentTarget
-
-              !currentTarget.parentElement && console.warn('No parent element')
-            }
-
-            if (relativeElementKey === 'prev') {
-              relativeElement = currentTarget.previousElementSibling
-                ? currentTarget.previousElementSibling
-                : currentTarget
-
-              !currentTarget.previousElementSibling &&
-                console.warn('No previous sibling element')
-            }
-
-            if (relativeElementKey === 'next') {
-              relativeElement = currentTarget.nextElementSibling
-                ? currentTarget.nextElementSibling
-                : currentTarget
-
-              !currentTarget.nextElementSibling &&
-                console.warn('No next sibling element')
-            }
-
-            if (relativeElementKey === 'child') {
-              relativeElement = currentTarget.firstElementChild
-                ? currentTarget.firstElementChild
-                : currentTarget
-
-              !currentTarget.firstElementChild &&
-                console.warn('No child element')
-            }
-            currentTarget = relativeElement
-
-            twaClasses.innerText = currentTarget.className
-
-            twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
-
-            twaClassesEditor.value = currentTarget.className
-
-            twaBreakpointClasses = getBreakpointClasses(currentTarget)
-          })
-        })
+        twaBreakpointClasses = getBreakpointClasses(currentTarget)
       }
+    })
+
+    twaBreakpointInputs.forEach((twaInput) => {
+      twaInput.addEventListener('input', () => {
+        twaBreakpointClasses[twaInput.name].forEach((twClass) =>
+          currentTarget.classList.toggle(twClass)
+        )
+
+        twaClasses.innerText = currentTarget.className
+
+        twaClassesEditor.value = currentTarget.className
+      })
+    })
+
+    twaRelativeElementButtons.forEach((relativeElementButton) => {
+      relativeElementButton.addEventListener('click', () => {
+        let relativeElement
+
+        let relativeElementKey =
+          relativeElementButton.getAttribute('data-relative')
+
+        if (relativeElementKey === 'parent') {
+          relativeElement = currentTarget.parentElement
+            ? currentTarget.parentElement
+            : currentTarget
+
+          !currentTarget.parentElement && console.warn('No parent element')
+        }
+
+        if (relativeElementKey === 'prev') {
+          relativeElement = currentTarget.previousElementSibling
+            ? currentTarget.previousElementSibling
+            : currentTarget
+
+          !currentTarget.previousElementSibling &&
+            console.warn('No previous sibling element')
+        }
+
+        if (relativeElementKey === 'next') {
+          relativeElement = currentTarget.nextElementSibling
+            ? currentTarget.nextElementSibling
+            : currentTarget
+
+          !currentTarget.nextElementSibling &&
+            console.warn('No next sibling element')
+        }
+
+        if (relativeElementKey === 'child') {
+          relativeElement = currentTarget.firstElementChild
+            ? currentTarget.firstElementChild
+            : currentTarget
+
+          !currentTarget.firstElementChild && console.warn('No child element')
+        }
+        currentTarget = relativeElement
+
+        twaClasses.innerText = currentTarget.className
+
+        twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
+
+        twaClassesEditor.value = currentTarget.className
+
+        twaBreakpointClasses = getBreakpointClasses(currentTarget)
+      })
+    })
+
+    twaClassesAdd.addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      currentTarget.className = twaClassesEditor.value
+
+      twaBreakpointClasses = getBreakpointClasses(currentTarget)
     })
 
     window.addEventListener('resize', () => {
