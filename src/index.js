@@ -133,6 +133,8 @@ export default function () {
 
               ${twaRelativeButtonCreator('next')}
             </div>
+
+            <div id="twaError" class="mt-2 text-amber-500 text-sm font-medium select-none" hidden></div>
           </div>
 
           <div>
@@ -179,6 +181,8 @@ export default function () {
     let twaRelativeElementButtons = [
       ...document.querySelectorAll('[data-relative]'),
     ]
+
+    let twaError = document.getElementById('twaError')
 
     let currentTarget
 
@@ -230,7 +234,7 @@ export default function () {
             ? currentTarget.parentElement
             : currentTarget
 
-          !currentTarget.parentElement && console.warn('No parent element')
+          !currentTarget.parentElement && renderError('No parent element')
         }
 
         if (relativeElementKey === 'prev') {
@@ -239,7 +243,7 @@ export default function () {
             : currentTarget
 
           !currentTarget.previousElementSibling &&
-            console.warn('No previous sibling element')
+            renderError('No previous sibling element')
         }
 
         if (relativeElementKey === 'next') {
@@ -248,7 +252,7 @@ export default function () {
             : currentTarget
 
           !currentTarget.nextElementSibling &&
-            console.warn('No next sibling element')
+            renderError('No next sibling element')
         }
 
         if (relativeElementKey === 'child') {
@@ -256,8 +260,9 @@ export default function () {
             ? currentTarget.firstElementChild
             : currentTarget
 
-          !currentTarget.firstElementChild && console.warn('No child element')
+          !currentTarget.firstElementChild && renderError('No child element')
         }
+
         currentTarget = relativeElement
 
         twaClasses.innerText = currentTarget.className
@@ -296,6 +301,16 @@ export default function () {
       })
     })
   })
+
+  let renderError = (message) => {
+    twaError.removeAttribute('hidden')
+
+    twaError.innerText = message
+
+    setTimeout(() => {
+      twaError.setAttribute('hidden', true)
+    }, 3000)
+  }
 
   let getBreakpointClasses = (twElement) => {
     return {
