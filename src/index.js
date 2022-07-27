@@ -185,6 +185,8 @@ export default function () {
     }
 
     if (event.metaKey) {
+      event.preventDefault()
+
       twaPopup.open = true
 
       currentTarget = event.target
