@@ -85,12 +85,6 @@ export default function () {
           </div>
 
           <div>
-            ${twaTitleCreator('Classes')}
-
-            <pre id="twaClasses" class="whitespace-pre-wrap font-mono p-2 bg-slate-800 rounded-md text-slate-500 text-sm mt-1"></pre>
-          </div>
-
-          <div>
             ${twaTitleCreator('Edit Breakpoints')}
 
             <fieldset class="flex flex-wrap gap-2 mt-1">
@@ -163,8 +157,6 @@ export default function () {
 
   let twaBreakpoint = document.getElementById('twaBreakpoint')
 
-  let twaClasses = document.getElementById('twaClasses')
-
   let twaBreakpointInputs = [
     ...document.querySelectorAll('input[type="checkbox"]'),
   ]
@@ -199,8 +191,6 @@ export default function () {
 
       twaBreakpoint.innerText = getActiveBreakpoint()
 
-      twaClasses.innerText = currentTarget.className
-
       twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
 
       twaClassesEditor.value = currentTarget.className
@@ -214,8 +204,6 @@ export default function () {
       twaBreakpointClasses[twaInput.name].forEach((twClass) =>
         currentTarget.classList.toggle(twClass)
       )
-
-      twaClasses.innerText = currentTarget.className
 
       twaClassesEditor.value = currentTarget.className
     })
@@ -263,8 +251,6 @@ export default function () {
       }
 
       currentTarget = relativeElement
-
-      twaClasses.innerText = currentTarget.className
 
       twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
 
