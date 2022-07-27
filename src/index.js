@@ -262,6 +262,10 @@ export default function () {
     })
   })
 
+  twaClassesEditor.addEventListener('keydown', (event) => {
+    console.log(event)
+  })
+
   twaClassesAdd.addEventListener('submit', (event) => {
     event.preventDefault()
 
