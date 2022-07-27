@@ -84,7 +84,7 @@ export default function () {
           <form id="twaClassesAdd">
             ${twaTitleCreator('Edit Classes')}
 
-            <textarea id="twaClassesEditor" rows="4" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700 resize-none"></textarea>
+            <textarea id="twaClassesEditor" rows="6" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700 resize-none"></textarea>
 
             <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full focus:outline-none focus:ring focus:ring-indigo-500 hover:ring hover:ring-indigo-600">
               <span class="select-none">Update</span>
@@ -93,7 +93,7 @@ export default function () {
         </div>
 
           <div>
-            ${twaTitleCreator('Edit Breakpoints')}
+            ${twaTitleCreator('Toggle Breakpoints')}
 
             <fieldset class="flex flex-wrap gap-2 mt-1">
               ${twaBreakpointInputsCreator('twaClasses2xl', '2xl')}

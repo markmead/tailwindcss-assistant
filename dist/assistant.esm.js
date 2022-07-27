@@ -46,7 +46,7 @@ function E(){let h=()=>{let e=window.innerWidth,t={640:"sm",768:"md",1024:"lg",1
           <form id="twaClassesAdd">
             ${d("Edit Classes")}
 
-            <textarea id="twaClassesEditor" rows="4" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700"></textarea>
+            <textarea id="twaClassesEditor" rows="6" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700 resize-none"></textarea>
 
             <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full focus:outline-none focus:ring focus:ring-indigo-500 hover:ring hover:ring-indigo-600">
               <span class="select-none">Update</span>
@@ -55,7 +55,7 @@ function E(){let h=()=>{let e=window.innerWidth,t={640:"sm",768:"md",1024:"lg",1
         </div>
 
           <div>
-            ${d("Edit Breakpoints")}
+            ${d("Toggle Breakpoints")}
 
             <fieldset class="flex flex-wrap gap-2 mt-1">
               ${a("twaClasses2xl","2xl")}
