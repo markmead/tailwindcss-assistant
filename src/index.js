@@ -263,16 +263,24 @@ export default function () {
   })
 
   twaClassesEditor.addEventListener('keydown', (event) => {
-    console.log(event)
+    if (event.key === 'Enter') {
+      event.preventDefault()
+
+      submitClassesForm(event)
+    }
   })
 
   twaClassesAdd.addEventListener('submit', (event) => {
+    submitClassesForm(event)
+  })
+
+  function submitClassesForm(event) {
     event.preventDefault()
 
     currentTarget.className = twaClassesEditor.value
 
     twaBreakpointClasses = getBreakpointClasses(currentTarget)
-  })
+  }
 
   window.addEventListener('resize', () => {
     twaBreakpoint.innerText = getActiveBreakpoint()
