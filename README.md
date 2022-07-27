@@ -35,7 +35,9 @@ yarn add -D tailwindcss-assistant
 ```js
 import assistant from 'tailwindcss-assistant'
 
-assistant()
+document.addEventListener('DOMContentLoaded', () => {
+  assistant()
+})
 ```
 
 ### Stats 📊
