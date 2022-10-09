@@ -1,3 +1,16 @@
+import {
+  CLASS_ADD_FORM,
+  CLASS_ADD_INPUT,
+  generateAddClassInputListeners,
+} from './lib/handleAddClassForm'
+
+import {
+  CLASS_INPUTS_WRAPPER,
+  generateClassInputListeners,
+  getClassInputs,
+  renderClassInputs,
+} from './lib/handleClassInputs'
+
 export default function () {
   let getActiveBreakpoint = () => {
     let windowWidth = window.innerWidth
@@ -30,11 +43,11 @@ export default function () {
 
   let twaBreakpointInputsCreator = (id, name) => `
       <div>
-        <input type="checkbox" id="${id}" name="${name}" checked class="sr-only peer" />
+        <input type="checkbox" id="${id}" name="${name}" checked data-breakpoint class="sr-only peer" />
 
         <label
           for="${id}"
-          class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 grid place-content-center"
+          class="bg-slate-800 rounded text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-teal-500 text-white h-8 w-12 grid place-content-center"
         >
           <span class="select-none">${name}</span>
         </label>
@@ -43,7 +56,7 @@ export default function () {
 
   let twaPositionButtonCreator = (name, classes) => `
       <div>
-        <button data-position='${classes}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 grid place-content-center">
+        <button data-position='${classes}' class="bg-slate-800 rounded text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-teal-500 text-white h-8 w-12 grid place-content-center">
           <span class="select-none">${name}</span>
         </button>
       </div>
@@ -51,7 +64,7 @@ export default function () {
 
   let twaRelativeButtonCreator = (name) => `
       <div>
-        <button data-relative='${name}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-14 grid place-content-center">
+        <button data-relative='${name}' class="bg-slate-800 rounded text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-teal-500 text-white h-8 w-14 grid place-content-center">
           <span class="select-none">${name}</span>
         </button>
       </div>
@@ -65,7 +78,7 @@ export default function () {
 
   popupWrapper.innerHTML = `
       <details id="twaPopup" class="relative bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
-        <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-indigo-500 focus:outline-none">
+        <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-teal-500 focus:outline-none">
           <span class="select-none">
             🤖
           </span>
@@ -80,17 +93,21 @@ export default function () {
             Open element CSS information with <span class="font-medium">CMD + Click</span>.
           </p>
 
-          <div>
-          <form id="twaClassesAdd">
-            ${twaTitleCreator('Edit Classes')}
+          <div class="space-y-2">
+            ${twaTitleCreator('Classes')}
 
-            <textarea id="twaClassesEditor" rows="6" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700 resize-none"></textarea>
+            <form id="${CLASS_ADD_FORM}">
+              <div class="flex gap-2">
+                <input type="text" id="${CLASS_ADD_INPUT}" placeholder="Add Tailwind CSS Class" class="border-slate-700 bg-slate-800 text-slate-300 rounded w-full text-xs focus:ring focus:ring-teal-500 focus:outline-none focus:border-slate-700" />
 
-            <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full focus:outline-none focus:ring focus:ring-indigo-500 hover:ring hover:ring-indigo-600">
-              <span class="select-none">Update</span>
-            </button>
-          </form>
-        </div>
+                <button class="bg-teal-600 text-white rounded px-3 py-1.5 text-xs font-medium shrink-0 focus:outline-none focus:ring focus:ring-teal-500 hover:ring hover:ring-teal-600">
+                  <span class="select-none">Add</span>
+                </button>
+              </div>
+            </form>
+
+            <fieldset id="${CLASS_INPUTS_WRAPPER}" class="flex flex-wrap gap-2"></fieldset>
+          </div>
 
           <div>
             ${twaTitleCreator('Toggle Breakpoints')}
@@ -127,7 +144,7 @@ export default function () {
               ${twaRelativeButtonCreator('next')}
             </div>
 
-            <div id="twaError" class="mt-2 text-amber-500 text-sm font-medium select-none" hidden></div>
+            <div id="twaError" class="mt-2 text-teal-500 text-sm font-medium select-none" hidden></div>
           </div>
 
           <div>
@@ -155,13 +172,11 @@ export default function () {
 
   document.body.appendChild(popupWrapper)
 
+  let currentTarget
+
   let twaBreakpoint = document.getElementById('twaBreakpoint')
 
-  let twaBreakpointInputs = [
-    ...document.querySelectorAll('input[type="checkbox"]'),
-  ]
-
-  let twaClassesAdd = document.getElementById('twaClassesAdd')
+  let twaBreakpointInputs = [...document.querySelectorAll('[data-breakpoint]')]
 
   let twaClassesEditor = document.getElementById('twaClassesEditor')
 
@@ -175,9 +190,9 @@ export default function () {
 
   let twaError = document.getElementById('twaError')
 
-  let currentTarget
-
   let twaBreakpointClasses
+
+  let twaClasses = []
 
   document.addEventListener('click', (event) => {
     if (!twaPopup.contains(event.target)) {
@@ -195,19 +210,41 @@ export default function () {
 
       twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
 
-      twaClassesEditor.value = currentTarget.className
+      handleAddClassForm()
+
+      handleClassInputs()
 
       twaBreakpointClasses = getBreakpointClasses(currentTarget)
     }
   })
 
+  function handleAddClassForm() {
+    generateAddClassInputListeners(currentTarget)
+
+    document
+      .getElementById(CLASS_ADD_FORM)
+      .addEventListener('submit', handleClassInputs)
+  }
+
+  function handleClassInputs() {
+    twaClasses = [...currentTarget.classList]
+
+    renderClassInputs(twaClasses)
+
+    twaClassInputs = getClassInputs()
+
+    generateClassInputListeners(currentTarget, twaClassesEditor)
+  }
+
   twaBreakpointInputs.forEach((twaInput) => {
     twaInput.addEventListener('input', () => {
-      twaBreakpointClasses[twaInput.name].forEach((twClass) =>
+      twaBreakpointClasses[twaInput.name].forEach(function (twClass) {
         currentTarget.classList.toggle(twClass)
-      )
 
-      twaClassesEditor.value = currentTarget.className
+        const inputLabel = document.querySelector(`[for='${twClass}']`)
+
+        inputLabel.classList.toggle('opacity-25')
+      })
     })
   })
 
@@ -256,31 +293,11 @@ export default function () {
 
       twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
 
-      twaClassesEditor.value = currentTarget.className
-
       twaBreakpointClasses = getBreakpointClasses(currentTarget)
+
+      handleClassInputs()
     })
   })
-
-  twaClassesEditor.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault()
-
-      submitClassesForm(event)
-    }
-  })
-
-  twaClassesAdd.addEventListener('submit', (event) => {
-    submitClassesForm(event)
-  })
-
-  function submitClassesForm(event) {
-    event.preventDefault()
-
-    currentTarget.className = twaClassesEditor.value
-
-    twaBreakpointClasses = getBreakpointClasses(currentTarget)
-  }
 
   window.addEventListener('resize', () => {
     twaBreakpoint.innerText = getActiveBreakpoint()
