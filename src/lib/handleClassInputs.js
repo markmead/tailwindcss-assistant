@@ -13,7 +13,7 @@ export function renderClassInputs(twaClasses) {
   })
 }
 
-export function generateClassInputListeners(currentTarget, twaClassesEditor) {
+export function generateClassInputListeners(currentTarget) {
   getClassInputs().forEach((twaInput) => {
     twaInput.addEventListener('input', () => {
       currentTarget.classList.toggle(twaInput.name)
