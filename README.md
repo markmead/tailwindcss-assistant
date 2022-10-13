@@ -8,10 +8,12 @@
 
 - Showing you the class names of the current element
 - Showing you the current breakpoint
-- Allowing you to toggle classes (including breakpoints)
+- Allowing you to toggle breakpoint classes
 - Allowing you to add new classes, including classes created using JIT
 
-## Install
+## Install 🌟
+
+It's very easy to install! 🙌
 
 ### CDN
 
@@ -38,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 ```
 
-### Stats
+### Stats 📊
 
 ![](https://img.shields.io/bundlephobia/min/tailwindcss-assistant)
 ![](https://img.shields.io/npm/v/tailwindcss-assistant)

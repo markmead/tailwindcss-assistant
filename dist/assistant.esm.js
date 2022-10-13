@@ -1,44 +1,33 @@
-function L(){let e=document.createElement("script");e.setAttribute("src","https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"),document.head.appendChild(e)}var l="twaAddClassForm",d="twaAddClassInput";function D(e){e.classList.add(document.getElementById(d).value),M()}function w(e){document.getElementById(l).addEventListener("submit",function(t){t.preventDefault(),D(e)})}function M(){document.getElementById(d).value=""}var c="twaClassInputsRender";function x(){return[...document.querySelectorAll("[data-class]")]}function I(e){U(),e.forEach(function(t){document.getElementById(c).innerHTML+=H(t)})}function C(e){x().forEach(t=>{t.addEventListener("input",()=>{e.classList.toggle(t.name),document.querySelector(`[for='${t.id}']`).classList.toggle("opacity-25")})})}function U(){document.getElementById(c).innerHTML=""}function H(e){return`
-    <div class="flex items-center">
-        <input type="checkbox" id="${e}" name="${e}" checked data-class class="sr-only peer" />
+function E(){let h=()=>{let e=window.innerWidth,t={640:"sm",768:"md",1024:"lg",1280:"xl",1536:"2xl"},n=Object.keys(t).filter(x=>x<e).at(-1);return t[n]||"Default"},v=document.createElement("script");v.setAttribute("src","https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"),document.head.appendChild(v);let i=document.createElement("div"),a=(e,t)=>`
+      <div>
+        <input type="checkbox" id="${e}" name="${t}" checked class="sr-only peer" />
 
         <label
-            for="${e}"
-            class="bg-slate-800 rounded flex hover:ring peer-focus:ring peer-focus:ring-teal-500 text-white px-2.5 py-1.5"
+          for="${e}"
+          class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 grid place-content-center"
         >
-            <span class="select-none text-xs leading-none font-medium">${e}</span>
+          <span class="select-none">${t}</span>
         </label>
-    </div>
-    `}var p={640:"sm",768:"md",1024:"lg",1280:"xl",1536:"2xl"},P=Object.values(p);function E(){let e=window.innerWidth,t=Object.keys(p).filter(n=>n<e).at(-1);return p[t]||"Default"}function h(e){return{"2xl":[...e.classList].filter(t=>t.startsWith("2xl:")),xl:[...e.classList].filter(t=>t.startsWith("xl:")),lg:[...e.classList].filter(t=>t.startsWith("lg:")),md:[...e.classList].filter(t=>t.startsWith("md:")),sm:[...e.classList].filter(t=>t.startsWith("sm:")),dark:[...e.classList].filter(t=>t.startsWith("dark:"))}}var u="twaBreakpointInputsRender";function v(){return[...document.querySelectorAll("[data-breakpoint]")]}function y(){q(),P.forEach(function(e){document.getElementById(u).innerHTML+=F(e)})}function k(e,t){v().forEach(n=>{n.addEventListener("input",()=>{document.querySelector(`[for='${n.getAttribute("id")}']`).classList.toggle("opacity-25"),t[n.name].forEach(function(o){e.classList.toggle(o),document.querySelector(`[for='${o}']`).classList.toggle("opacity-25")})})})}function q(){document.getElementById(u).innerHTML=""}function F(e){return`
-    <div>
-      <input type="checkbox" id="${e}" name="${e}" checked data-breakpoint class="sr-only peer" />
-
-      <label
-        for="${e}"
-        class="bg-slate-800 rounded flex hover:ring peer-focus:ring peer-focus:ring-teal-500 text-white px-2.5 py-1.5"
-      >
-      <span class="select-none text-xs leading-none font-medium">${e}</span>
-      </label>
-    </div>
-    `}var m="twaPopupPositionsWrapper";function A(e,t){e.classList.add("fixed"),t.forEach(n=>e.classList.add(n)),document.body.appendChild(e)}function j(){return[...document.querySelectorAll("[data-position]")]}function S(){K(),G.forEach(function(e){document.getElementById(m).innerHTML+=z(e.name,e.classNames)})}function K(){document.getElementById(m).innerHTML=""}function T(e,t){j().forEach(n=>{n.addEventListener("click",()=>{t.forEach(s=>e.classList.remove(s)),t=n.getAttribute("data-position").split(","),t.forEach(s=>e.classList.add(s))})})}function z(e,t){return`
+      </div>
+    `,r=(e,t)=>`
       <div>
-        <button data-position="${t}" class="bg-slate-800 rounded flex hover:ring peer-focus:ring peer-focus:ring-teal-500 text-white px-2.5 py-1.5">
-          <span class="select-none text-xs leading-none font-medium">${e}</span>
+        <button data-position='${t}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 grid place-content-center">
+          <span class="select-none">${e}</span>
         </button>
       </div>
-    `}var G=[{name:"Top Left",classNames:["top-4","left-4"]},{name:"Top Right",classNames:["top-4","right-4"]},{name:"Bottom Left",classNames:["bottom-4","left-4"]},{name:"Bottom Right",classNames:["bottom-4","right-4"]}];function a(e){let t=document.getElementById("twaError");t.removeAttribute("hidden"),t.innerText=e,setTimeout(()=>t.setAttribute("hidden",!0),3e3)}var J=["prev","next","child","parent"],f="twaElementButtonsRender";function Q(){return[...document.querySelectorAll("[data-relative]")]}function $(){V(),J.forEach(function(e){document.getElementById(f).innerHTML+=X(e)})}function R(e){Q().forEach(t=>{t.addEventListener("click",()=>{let n,s=t.getAttribute("data-relative");s==="parent"&&(n=e.parentElement?e.parentElement:e,!e.parentElement&&a("No parent element")),s==="prev"&&(n=e.previousElementSibling?e.previousElementSibling:e,!e.previousElementSibling&&a("No previous sibling element")),s==="next"&&(n=e.nextElementSibling?e.nextElementSibling:e,!e.nextElementSibling&&a("No next sibling element")),s==="child"&&(n=e.firstElementChild?e.firstElementChild:e,!e.firstElementChild&&a("No child element")),document.dispatchEvent(new CustomEvent("twa:updated-target",{bubbles:!0,detail:{newTarget:n}}))})})}function V(){document.getElementById(f).innerHTML=""}function X(e){return`
-    <div>
-      <button data-relative="${e}" class="bg-slate-800 rounded flex hover:ring peer-focus:ring peer-focus:ring-teal-500 text-white px-2.5 py-1.5">
-      <span class="select-none text-xs leading-none font-medium capitalize">${e}</span>
-      </button>
-    </div>
-    `}function _(){let e=["right-4","bottom-4"],t=document.createElement("div");L(),A(t,e);let n=i=>`
+    `,o=e=>`
+      <div>
+        <button data-relative='${e}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-14 grid place-content-center">
+          <span class="select-none">${e}</span>
+        </button>
+      </div>
+    `,d=e=>`
       <strong class="text-slate-400 font-medium text-sm select-none">
-        ${i}
+        ${e}
       </strong>
-    `;t.innerHTML=`
+    `;i.innerHTML=`
       <details id="twaPopup" class="relative bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
-        <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-teal-500 focus:outline-none">
+        <summary class="flex items-center gap-1 justify-center h-10 w-10 group-open:h-12 group-open:w-full group-open:bg-slate-800/50 cursor-pointer text-white focus:ring focus:ring-inset focus:ring-indigo-500 focus:outline-none">
           <span class="select-none">
             \u{1F916}
           </span>
@@ -53,45 +42,69 @@ function L(){let e=document.createElement("script");e.setAttribute("src","https:
             Open element CSS information with <span class="font-medium">CMD + Click</span>.
           </p>
 
-          <div class="space-y-2">
-            ${n("Classes")}
+          <div>
+          <form id="twaClassesAdd">
+            ${d("Edit Classes")}
 
-            <form id="${l}">
-              <div class="flex gap-2">
-                <input type="text" id="${d}" placeholder="Add Tailwind CSS Class" class="border-slate-700 bg-slate-800 text-slate-300 rounded w-full text-xs focus:ring focus:ring-teal-500 focus:outline-none focus:border-slate-700" />
+            <textarea id="twaClassesEditor" rows="6" spellcheck="false" data-gramm="false" class="mt-1 border-slate-700 bg-slate-800 text-slate-300 rounded-md w-full text-sm focus:ring focus:ring-indigo-500 focus:outline-none focus:border-slate-700 resize-none"></textarea>
 
-                <button class="bg-teal-600 text-white rounded px-3 py-1.5 text-xs font-medium shrink-0 focus:outline-none focus:ring focus:ring-teal-500 hover:ring hover:ring-teal-600">
-                  <span class="select-none">Add</span>
-                </button>
-              </div>
-            </form>
+            <button class="bg-indigo-600 text-white rounded-md px-5 py-3 text-sm font-medium mt-2 w-full focus:outline-none focus:ring focus:ring-indigo-500 hover:ring hover:ring-indigo-600">
+              <span class="select-none">Update</span>
+            </button>
+          </form>
+        </div>
 
-            <fieldset id="${c}" class="flex flex-wrap gap-2"></fieldset>
-          </div>
+          <div>
+            ${d("Toggle Breakpoints")}
 
-          <div class="space-y-2">
-            ${n("Toggle Breakpoints")}
+            <fieldset class="flex flex-wrap gap-2 mt-1">
+              ${a("twaClasses2xl","2xl")}
 
-            <fieldset id="${u}" class="flex flex-wrap gap-2"></fieldset>
+              ${a("twaClassesXl","xl")}
 
-            <small class="text-xs font-medium text-slate-500 block">
-              Active Breakpoint: <span id="twaBreakpoint" class="uppercase"></span>
+              ${a("twaClassesLg","lg")}
+
+              ${a("twaClassesMd","md")}
+
+              ${a("twaClassesSm","sm")}
+
+              ${a("twaClassesDark","dark")}
+            </fieldset>
+
+            <small class="text-xs font-medium text-slate-500 mt-1.5 block">
+              Active Breakpoint: <span id="twaBreakpoint"></span>
             </small>
           </div>
 
-          <div class="space-y-2">
-            ${n("Change Element")}
+          <div>
+            ${d("Change Element")}
 
-            <div id="${f}" class="flex flex-wrap gap-2"></div>
+            <div class="flex flex-wrap gap-2 mt-1">
+              ${o("parent")}
 
-            <div id="twaError" class="text-red-500 text-sm font-medium select-none" hidden></div>
+              ${o("child")}
+
+              ${o("prev")}
+
+              ${o("next")}
+            </div>
+
+            <div id="twaError" class="mt-2 text-amber-500 text-sm font-medium select-none" hidden></div>
           </div>
 
-          <div class="space-y-2">
-            ${n("Popup Position")}
+          <div>
+            ${d("Popup Position")}
 
-            <div id="${m}" class="flex flex-wrap gap-2"></div>
+            <div class="flex flex-wrap gap-2 mt-1">
+              ${r("tl",["top-4","left-4"])}
+
+              ${r("tr",["top-4","right-4"])}
+
+              ${r("bl",["bottom-4","left-4"])}
+
+              ${r("br",["bottom-4","right-4"])}
+            </div>
           </div>
         </div>
       </details>
-    `;let s,o=document.getElementById("twaBreakpoint"),r,B=[];document.addEventListener("click",i=>{twaPopup.contains(i.target)||(twaPopup.open=!1),i.metaKey&&(i.preventDefault(),twaPopup.open=!0,s=i.target,o.innerText=E(),r=h(s),N(),g(),b(),O(),W())});function N(){w(s),document.getElementById(l).addEventListener("submit",g)}function g(){B=[...s.classList],I(B),twaClassInputs=x(),C(s)}function b(){y(),twaBreakpointInputs=v(),k(s,r)}function O(){S(),T(t,e)}function W(){$(),R(s)}document.addEventListener("twa:updated-target",function(i){s=i.detail.newTarget,r=h(s),g(),b()}),window.addEventListener("resize",function(){o.innerText=E()})}var be=_;export{be as default};
+    `,i.classList.add("fixed");let c=["right-4","bottom-4"];c.forEach(e=>i.classList.add(e)),document.body.appendChild(i);let w=document.getElementById("twaBreakpoint"),m=[...document.querySelectorAll('input[type="checkbox"]')],k=document.getElementById("twaClassesAdd"),l=document.getElementById("twaClassesEditor"),C=[...document.querySelectorAll("[data-position]")],$=[...document.querySelectorAll("[data-relative]")],f=document.getElementById("twaError"),s,p;document.addEventListener("click",e=>{twaPopup.contains(e.target)||(twaPopup.open=!1),e.metaKey&&(e.preventDefault(),twaPopup.open=!0,s=e.target,w.innerText=h(),m.forEach(t=>t.checked=!0),l.value=s.className,p=g(s))}),m.forEach(e=>{e.addEventListener("input",()=>{p[e.name].forEach(t=>s.classList.toggle(t)),l.value=s.className})}),$.forEach(e=>{e.addEventListener("click",()=>{let t,n=e.getAttribute("data-relative");n==="parent"&&(t=s.parentElement?s.parentElement:s,!s.parentElement&&u("No parent element")),n==="prev"&&(t=s.previousElementSibling?s.previousElementSibling:s,!s.previousElementSibling&&u("No previous sibling element")),n==="next"&&(t=s.nextElementSibling?s.nextElementSibling:s,!s.nextElementSibling&&u("No next sibling element")),n==="child"&&(t=s.firstElementChild?s.firstElementChild:s,!s.firstElementChild&&u("No child element")),s=t,m.forEach(x=>x.checked=!0),l.value=s.className,p=g(s)})}),l.addEventListener("keydown",e=>{e.key==="Enter"&&(e.preventDefault(),b(e))}),k.addEventListener("submit",e=>{b(e)});function b(e){e.preventDefault(),s.className=l.value,p=g(s)}window.addEventListener("resize",()=>{w.innerText=h()}),C.forEach(e=>{e.addEventListener("click",()=>{c.forEach(t=>i.classList.remove(t)),c=e.getAttribute("data-position").split(","),c.forEach(t=>i.classList.add(t))})});let u=e=>{f.removeAttribute("hidden"),f.innerText=e,setTimeout(()=>{f.setAttribute("hidden",!0)},3e3)},g=e=>({"2xl":[...e.classList].filter(t=>t.startsWith("2xl:")),xl:[...e.classList].filter(t=>t.startsWith("xl:")),lg:[...e.classList].filter(t=>t.startsWith("lg:")),md:[...e.classList].filter(t=>t.startsWith("md:")),sm:[...e.classList].filter(t=>t.startsWith("sm:")),dark:[...e.classList].filter(t=>t.startsWith("dark:"))})}var B=E;export{B as default};
