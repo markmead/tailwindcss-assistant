@@ -11,9 +11,7 @@
 - Allowing you to toggle breakpoint classes
 - Allowing you to add new classes, including classes created using JIT
 
-## Install 🌟
-
-It's very easy to install! 🙌
+## Install
 
 ### CDN
 
@@ -40,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 ```
 
-### Stats 📊
+### Stats
 
 ![](https://img.shields.io/bundlephobia/min/tailwindcss-assistant)
 ![](https://img.shields.io/npm/v/tailwindcss-assistant)
