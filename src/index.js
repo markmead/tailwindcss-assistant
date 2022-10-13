@@ -1,32 +1,37 @@
+import { initTailwind } from './lib/initTailwind'
+
 import {
   CLASS_ADD_FORM,
   CLASS_ADD_INPUT,
   generateAddClassInputListeners,
 } from './lib/handleAddClassForm'
+
 import {
   CLASS_INPUTS_WRAPPER,
   generateClassInputListeners,
   getClassInputs,
   renderClassInputs,
 } from './lib/handleClassInputs'
+
 import {
   getActiveBreakpoint,
   getBreakpointClasses,
 } from './lib/getActiveBreakpoint'
+
 import {
   BREAKPOINT_INPUTS_WRAPPER,
   generateBreakpointInputListeners,
   getBreakpointInputs,
   renderBreakpointInputs,
 } from './lib/handleBreakpointInputs'
+
 import {
   generatePositionButtonsListeners,
   initPopup,
   POPUP_POSITIONS_WRAPPER,
   renderPositionButtons,
 } from './lib/handlePopup'
-import { initTailwind } from './lib/initTailwind'
-import { renderError } from './lib/handleError'
+
 import {
   ELEMENT_BUTTONS_WRAPPER,
   generateElementButtonsListeners,
@@ -111,12 +116,6 @@ export default function () {
 
   let twaBreakpoint = document.getElementById('twaBreakpoint')
 
-  let twaBreakpointInputs = [...document.querySelectorAll('[data-breakpoint]')]
-
-  let twaRelativeElementButtons = [
-    ...document.querySelectorAll('[data-relative]'),
-  ]
-
   let twaBreakpointClasses
 
   let twaClasses = []
@@ -134,8 +133,6 @@ export default function () {
       currentTarget = event.target
 
       twaBreakpoint.innerText = getActiveBreakpoint()
-
-      twaBreakpointInputs.forEach((twaInput) => (twaInput.checked = true))
 
       twaBreakpointClasses = getBreakpointClasses(currentTarget)
 
@@ -185,7 +182,7 @@ export default function () {
     generateElementButtonsListeners(currentTarget)
   }
 
-  document.addEventListener('updated:twa-element', function (e) {
+  document.addEventListener('twa:updated-target', function (e) {
     currentTarget = e.detail.newTarget
 
     twaBreakpointClasses = getBreakpointClasses(currentTarget)
@@ -194,8 +191,7 @@ export default function () {
     handleBreakpointInputs()
   })
 
-  window.addEventListener(
-    'resize',
-    () => (twaBreakpoint.innerText = getActiveBreakpoint())
-  )
+  window.addEventListener('resize', function () {
+    twaBreakpoint.innerText = getActiveBreakpoint()
+  })
 }

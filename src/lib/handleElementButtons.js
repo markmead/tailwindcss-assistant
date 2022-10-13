@@ -60,7 +60,7 @@ export function generateElementButtonsListeners(currentTarget) {
       }
 
       document.dispatchEvent(
-        new CustomEvent('updated:twa-element', {
+        new CustomEvent('twa:updated-target', {
           bubbles: true,
           detail: { newTarget: relativeElement },
         })
