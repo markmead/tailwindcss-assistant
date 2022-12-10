@@ -1,6 +1,6 @@
 # Tailwind CSS Assistant
 
-**[See it in action on this example website 🎉](https://tailwindcss-assistant-example.vercel.app/)**
+Get assistance when developing projects with Tailwind CSS 🤖
 
 ![Tailwind CSS Assistant Example](https://user-images.githubusercontent.com/50486078/180596703-753d28ad-d404-4805-8800-c2cbdb78f1c0.gif)
 
