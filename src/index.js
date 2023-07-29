@@ -1,67 +1,19 @@
+import { initTailwind } from './initTailwind.js'
+import {
+  getBreakpointClasses,
+  getActiveBreakpoint,
+} from './breakpointHelpers.js'
+import {
+  twaBreakpointInputsCreator,
+  twaPositionButtonCreator,
+  twaRelativeButtonCreator,
+  twaTitleCreator,
+} from './creatorHelper.js'
+
 export default function () {
-  let getActiveBreakpoint = () => {
-    let windowWidth = window.innerWidth
+  initTailwind()
 
-    let tailwindBreakpoints = {
-      640: 'sm',
-      768: 'md',
-      1024: 'lg',
-      1280: 'xl',
-      1536: '2xl',
-    }
-
-    let activeBreakpoint = Object.keys(tailwindBreakpoints)
-      .filter((breakpointWidth) => breakpointWidth < windowWidth)
-      .at(-1)
-
-    return tailwindBreakpoints[activeBreakpoint] || 'Default'
-  }
-
-  let scriptElement = document.createElement('script')
-
-  scriptElement.setAttribute(
-    'src',
-    'https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp'
-  )
-
-  document.head.appendChild(scriptElement)
-
-  let popupWrapper = document.createElement('div')
-
-  let twaBreakpointInputsCreator = (id, name) => `
-      <div>
-        <input type="checkbox" id="${id}" name="${name}" checked class="sr-only peer" />
-
-        <label
-          for="${id}"
-          class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 grid place-content-center"
-        >
-          <span class="select-none">${name}</span>
-        </label>
-      </div>
-    `
-
-  let twaPositionButtonCreator = (name, classes) => `
-      <div>
-        <button data-position='${classes}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-12 grid place-content-center">
-          <span class="select-none">${name}</span>
-        </button>
-      </div>
-    `
-
-  let twaRelativeButtonCreator = (name) => `
-      <div>
-        <button data-relative='${name}' class="bg-slate-800 rounded-md text-xs font-medium hover:ring peer-focus:ring peer-focus:ring-indigo-500 text-white h-8 w-14 grid place-content-center">
-          <span class="select-none">${name}</span>
-        </button>
-      </div>
-    `
-
-  let twaTitleCreator = (title) => `
-      <strong class="text-slate-400 font-medium text-sm select-none">
-        ${title}
-      </strong>
-    `
+  const popupWrapper = document.createElement('div')
 
   popupWrapper.innerHTML = `
       <details id="twaPopup" class="relative bg-slate-900 shadow-lg rounded-lg group overflow-hidden max-w-sm open:w-screen">
@@ -97,15 +49,10 @@ export default function () {
 
             <fieldset class="flex flex-wrap gap-2 mt-1">
               ${twaBreakpointInputsCreator('twaClasses2xl', '2xl')}
-
               ${twaBreakpointInputsCreator('twaClassesXl', 'xl')}
-
               ${twaBreakpointInputsCreator('twaClassesLg', 'lg')}
-
               ${twaBreakpointInputsCreator('twaClassesMd', 'md')}
-
               ${twaBreakpointInputsCreator('twaClassesSm', 'sm')}
-
               ${twaBreakpointInputsCreator('twaClassesDark', 'dark')}
             </fieldset>
 
@@ -119,11 +66,8 @@ export default function () {
 
             <div class="flex flex-wrap gap-2 mt-1">
               ${twaRelativeButtonCreator('parent')}
-
               ${twaRelativeButtonCreator('child')}
-
               ${twaRelativeButtonCreator('prev')}
-
               ${twaRelativeButtonCreator('next')}
             </div>
 
@@ -135,11 +79,8 @@ export default function () {
 
             <div class="flex flex-wrap gap-2 mt-1">
               ${twaPositionButtonCreator('tl', ['top-4', 'left-4'])}
-
               ${twaPositionButtonCreator('tr', ['top-4', 'right-4'])}
-
               ${twaPositionButtonCreator('bl', ['bottom-4', 'left-4'])}
-
               ${twaPositionButtonCreator('br', ['bottom-4', 'right-4'])}
             </div>
           </div>
@@ -155,41 +96,40 @@ export default function () {
 
   document.body.appendChild(popupWrapper)
 
-  let twaBreakpoint = document.getElementById('twaBreakpoint')
-
-  let twaBreakpointInputs = [
+  const twaBreakpoint = document.getElementById('twaBreakpoint')
+  const twaBreakpointInputs = [
     ...document.querySelectorAll('input[type="checkbox"]'),
   ]
 
-  let twaClassesAdd = document.getElementById('twaClassesAdd')
+  const twaClassesAdd = document.getElementById('twaClassesAdd')
+  const twaClassesEditor = document.getElementById('twaClassesEditor')
 
-  let twaClassesEditor = document.getElementById('twaClassesEditor')
-
-  let twaPopupPositionButtons = [
+  const twaPopupPositionButtons = [
     ...document.querySelectorAll('[data-position]'),
   ]
-
-  let twaRelativeElementButtons = [
+  const twaRelativeElementButtons = [
     ...document.querySelectorAll('[data-relative]'),
   ]
 
-  let twaError = document.getElementById('twaError')
+  const twaError = document.getElementById('twaError')
 
   let currentTarget
 
   let twaBreakpointClasses
 
-  document.addEventListener('click', (event) => {
-    if (!twaPopup.contains(event.target)) {
+  document.addEventListener('click', (eventItem) => {
+    const targetEl = eventItem.target
+
+    if (!twaPopup.contains(targetEl)) {
       twaPopup.open = false
     }
 
-    if (event.metaKey) {
-      event.preventDefault()
+    if (eventItem.metaKey) {
+      eventItem.preventDefault()
 
       twaPopup.open = true
 
-      currentTarget = event.target
+      currentTarget = targetEl
 
       twaBreakpoint.innerText = getActiveBreakpoint()
 
@@ -215,7 +155,7 @@ export default function () {
     relativeElementButton.addEventListener('click', () => {
       let relativeElement
 
-      let relativeElementKey =
+      const relativeElementKey =
         relativeElementButton.getAttribute('data-relative')
 
       if (relativeElementKey === 'parent') {
@@ -262,20 +202,20 @@ export default function () {
     })
   })
 
-  twaClassesEditor.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault()
+  twaClassesEditor.addEventListener('keydown', (eventItem) => {
+    if (eventItem.key === 'Enter') {
+      eventItem.preventItemDefault()
 
-      submitClassesForm(event)
+      submitClassesForm(eventItem)
     }
   })
 
-  twaClassesAdd.addEventListener('submit', (event) => {
-    submitClassesForm(event)
+  twaClassesAdd.addEventListener('submit', (eventItem) => {
+    submitClassesForm(eventItem)
   })
 
-  function submitClassesForm(event) {
-    event.preventDefault()
+  function submitClassesForm(eventItem) {
+    eventItem.preventDefault()
 
     currentTarget.className = twaClassesEditor.value
 
@@ -300,36 +240,11 @@ export default function () {
     })
   })
 
-  let renderError = (message) => {
+  const renderError = (errorMessage) => {
     twaError.removeAttribute('hidden')
 
-    twaError.innerText = message
+    twaError.innerText = errorMessage
 
-    setTimeout(() => {
-      twaError.setAttribute('hidden', true)
-    }, 3000)
-  }
-
-  let getBreakpointClasses = (twElement) => {
-    return {
-      '2xl': [...twElement.classList].filter((className) =>
-        className.startsWith('2xl:')
-      ),
-      xl: [...twElement.classList].filter((className) =>
-        className.startsWith('xl:')
-      ),
-      lg: [...twElement.classList].filter((className) =>
-        className.startsWith('lg:')
-      ),
-      md: [...twElement.classList].filter((className) =>
-        className.startsWith('md:')
-      ),
-      sm: [...twElement.classList].filter((className) =>
-        className.startsWith('sm:')
-      ),
-      dark: [...twElement.classList].filter((className) =>
-        className.startsWith('dark:')
-      ),
-    }
+    setTimeout(() => twaError.setAttribute('hidden', true), 3000)
   }
 }
