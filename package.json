@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-assistant",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Get assistance when developing projects with Tailwind CSS 🤖",
   "keywords": [
     "Tailwind CSS",
@@ -9,12 +9,12 @@
   ],
   "author": "Mark Mead",
   "license": "MIT",
-  "module": "dist/FILE.esm.js",
-  "unpkg": "dist/FILE.min.js",
+  "module": "dist/assistant.esm.js",
+  "unpkg": "dist/assistant.min.js",
   "scripts": {
     "build": "node scripts/build.js"
   },
   "devDependencies": {
-    "esbuild": "^0.16.2"
+    "esbuild": "^0.18.17"
   }
 }
